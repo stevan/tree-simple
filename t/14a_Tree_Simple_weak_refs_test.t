@@ -5,7 +5,7 @@ use warnings;
 
 use Test::More;
 
-eval "use Test::Memory::Cycle 1.01";
+eval "use Test::Memory::Cycle 1.02";
 plan skip_all => "Test::Memory::Cycle required for testing memory leaks" if $@;
 
 plan tests => 43;
