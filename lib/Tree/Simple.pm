@@ -25,6 +25,7 @@ sub is_leaf {
 }
 
 sub parent {
+    return Tree::Simple::Null->new;
 }
 
 package Tree::Simple::Null;
