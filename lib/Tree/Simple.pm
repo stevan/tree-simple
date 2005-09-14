@@ -20,6 +20,52 @@ sub is_root {
     return 1;
 }
 
+sub is_leaf {
+    return 1;
+}
+
+sub parent {
+}
+
+package Tree::Simple::Null;
+
+our @ISA = qw( Tree::Simple );
+our $AUTOLOAD;
+
+use overload
+    '""' => 'stringify',
+    '0+' => 'numify',
+    'bool' => 'boolify',
+    fallback => 1,
+;
+
+{
+    my %singletons;
+    sub new {
+        my $class = shift;
+        $singletons{$class} = bless {}, $class
+            unless exists $singletons{$class};
+        $singletons{$class};
+    }
+}
+
+# The null object can do anything
+sub can { 1 }
+
+sub AUTOLOAD {
+    no strict 'refs';
+    *{$AUTOLOAD} = sub { ref($_[0])->new };
+    goto &$AUTOLOAD;
+}
+
+sub defined { return }
+
+sub stringify { "" }
+sub numify { 0 }
+sub boolify { return }
+
+1;
+
 __END__
 
 ## ----------------------------------------------------------------------------

@@ -14,7 +14,8 @@ my %methods = (
         new
     )],
     public => [ qw(
-        is_root
+        is_root is_leaf
+        parent
     )],
 #    private => [],
 #    book_keeping => [],
