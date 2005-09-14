@@ -153,7 +153,7 @@ sub addChildren {
     $self;
 }
 
-sub insertChildren {
+sub _insertChildAt {
     my ($self, $index, @trees) = @_;
     (defined($index)) 
         || die "Insufficient Arguments : Cannot insert child without index";
@@ -184,6 +184,7 @@ sub insertChildren {
             ];
     }
 }
+*insertChildren = \&_insertChildAt;
 
 # insertChild is really the same as
 # insertChildren, you are just inserting
