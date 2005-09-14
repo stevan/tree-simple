@@ -52,10 +52,6 @@ sub _init {
     # and set the value of _children
     $self->{_children} = $children;    
     # initialize the parent and depth here
-    #XXX These don't seem to be necessary as the slots will
-    # be initialized immediately.
-#    $self->{_parent} = undef;
-#    $self->{_depth}  = undef;    
     $self->{_height} = 1;
     $self->{_width}  = 1;
     # Now check our $parent value
@@ -66,16 +62,12 @@ sub _init {
         }
         elsif ($parent eq $self->ROOT) {
             $self->_setParent( $self->ROOT );
-#            $self->{_parent} = $parent;
-#            $self->{_depth} = -1;
         }
         else {
             die "Insufficient Arguments : parent argument must be a Tree::Simple object";
         }
     }
     else {
-#        $self->{_parent} = ROOT;
-#        $self->{_depth} = -1;
         $self->_setParent( $self->ROOT );
     }
 }
@@ -140,21 +132,11 @@ sub setUID {
 ## child methods
 
 sub addChild {
-    my ($self, $tree) = @_;
-    $self->_insertChildAt( $self->getChildCount, $tree );
-    $self;
-    # This fails test 5 of 12_Tree_Simple_exceptions.t
-    # It is faster, though, but it negates possible overloading.
-#    splice @_, 1, 0, $_[0]->getChildCount;
-#    goto &insertChild;
+    splice @_, 1, 0, $_[0]->getChildCount;
+    goto &insertChild;
 }
 
 sub addChildren {
-#    my ($self, @trees) = @_;
-#    $self->insertChildren($self->getChildCount, @trees);
-#    $self;
-    # This, apparently, doesn't fail. I suspect it's because we don't
-    # have a test for the same cases as we do for addChild().
     splice @_, 1, 0, $_[0]->getChildCount;
     goto &insertChildren;
 }
@@ -194,11 +176,6 @@ sub _insertChildAt {
     }
     # otherwise do some heavy lifting here
     else {
-#        $self->{_children} = [
-#            @{$self->{_children}}[0 .. ($index - 1)],
-#            @trees,
-#            @{$self->{_children}}[$index .. $#{$self->{_children}}],
-#            ];
         splice @{$self->{_children}}, $index, 0, @trees;
     }
 
@@ -233,10 +210,6 @@ sub removeChildAt {
     # otherwise do some heavy lifting here    
     else {
         $removed_child = $self->{_children}->[$index];
-#        $self->{_children} = [
-#            @{$self->{_children}}[0 .. ($index - 1)],
-#            @{$self->{_children}}[($index + 1) .. $#{$self->{_children}}],
-#            ];
         splice @{$self->{_children}}, $index, 1;
     }
     # make sure we fix the height
@@ -328,46 +301,16 @@ sub insertSiblings {
 ## ----------------------------------------------------------------------------
 ## accessors
 
-sub getUID { $_[0]{_uid} }
-#    my ($self) = @_;
-#    return $self->{_uid};
-#}
-
-sub getParent { $_[0]{_parent} }
-#    my ($self)= @_;
-#    return $self->{_parent};
-#}
-
-sub getDepth { $_[0]{_depth} }
-#    my ($self) = @_;
-#    return $self->{_depth};
-#}
-
-sub getNodeValue { $_[0]{_node} }
-#    my ($self) = @_;
-#    return $self->{_node};
-#}
-
-# this now has an alternate implementation
-# which eliminates the on demand recursion 
-# and instead stores the height in each node
-sub getHeight { $_[0]{_height} }
-#    my ($self) = @_;
-#    return $self->{_height};
-#}
+sub getUID        { $_[0]{_uid}    }
+sub getParent     { $_[0]{_parent} }
+sub getDepth      { $_[0]{_depth}  }
+sub getNodeValue  { $_[0]{_node}   }
+sub getHeight     { $_[0]{_height} }
+sub getWidth      { $_[0]{_width}  }
+sub getChildCount { $#{$_[0]{_children}} + 1 }
 
 # for backwards compatability
 *height = \&getHeight;
-
-sub getWidth { $_[0]{_width} }
-#    my ($self) = @_;
-#    return $self->{_width};
-#}
-
-sub getChildCount { $#{$_[0]{_children}} + 1 }
-#    my ($self) = @_;
-#    return scalar @{$self->{_children}};
-#}
 
 sub getChild {
     my ($self, $index) = @_;
@@ -402,14 +345,8 @@ sub getAllSiblings {
 ## informational
 
 sub isLeaf { $_[0]->getChildCount == 0 }
-#    my ($self) = @_;
-#    return (scalar @{$self->{_children}} == 0);
-#}
 
-sub isRoot {
-    my ($self) = @_;
-    return (!defined($self->{_parent}) || $self->{_parent} eq $self->ROOT);
-}
+sub isRoot { (!defined($_[0]->{_parent}) || $_[0]->{_parent} eq $_[0]->ROOT) }
 
 sub size {
     my ($self) = @_;
@@ -1103,6 +1040,8 @@ Is a wrapper around a C library, again B<Tree::Simple> is pure-perl. The author 
 =head1 AUTHOR
 
 stevan little, E<lt>stevan@iinteractive.comE<gt>
+
+rob kinyon E<lt>rob@iinteractive.comE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
