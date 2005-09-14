@@ -137,13 +137,7 @@ sub setUID {
 
 sub addChild {
     my ($self, $tree) = @_;
-    (blessed($tree) && $tree->isa("Tree::Simple")) 
-        || die "Insufficient Arguments : Child must be a Tree::Simple object";
-    $tree->_setParent($self);
-    $self->_setHeight($tree);
-    $self->_setWidth($tree);    
-    $tree->fixDepth() unless $tree->isLeaf();
-    push @{$self->{_children}} => $tree;    
+    $self->_insertChildAt( $self->getChildCount, $tree );
     $self;
 }
 
@@ -155,14 +149,18 @@ sub addChildren {
 
 sub _insertChildAt {
     my ($self, $index, @trees) = @_;
+
     (defined($index)) 
         || die "Insufficient Arguments : Cannot insert child without index";
+
     # check the bounds of our children 
     # against the index given
-    ($index <= $self->getChildCount()) 
+    my $max = $self->getChildCount();
+    ($index <= $max)
         || die "Index Out of Bounds : got ($index) expected no more than (" . $self->getChildCount() . ")";
     (@trees) 
         || die "Insufficient Arguments : no tree(s) to insert";    
+
     foreach my $tree (@trees) {
         (blessed($tree) && $tree->isa("Tree::Simple")) 
             || die "Insufficient Arguments : Child must be a Tree::Simple object";    
@@ -171,9 +169,14 @@ sub _insertChildAt {
         $self->_setWidth($tree);                         
         $tree->fixDepth() unless $tree->isLeaf();
     }
+
     # if index is zero, use this optimization
     if ($index == 0) {
         unshift @{$self->{_children}} => @trees;
+    }
+    # if index is max, use this optimization
+    elsif ($index == $max) {
+        push @{$self->{_children}} => @trees;
     }
     # otherwise do some heavy lifting here
     else {
