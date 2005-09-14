@@ -52,8 +52,10 @@ sub _init {
     # and set the value of _children
     $self->{_children} = $children;    
     # initialize the parent and depth here
-    $self->{_parent} = undef;
-    $self->{_depth}  = undef;    
+    #XXX These don't seem to be necessary as the slots will
+    # be initialized immediately.
+#    $self->{_parent} = undef;
+#    $self->{_depth}  = undef;    
     $self->{_height} = 1;
     $self->{_width}  = 1;
     # Now check our $parent value
@@ -62,27 +64,29 @@ sub _init {
             # and set it as our parent
             $parent->addChild($self);
         }
-        elsif ($parent eq ROOT) {
-            $self->{_parent} = $parent;
-            $self->{_depth} = -1;
+        elsif ($parent eq $self->ROOT) {
+            $self->_setParent( $self->ROOT );
+#            $self->{_parent} = $parent;
+#            $self->{_depth} = -1;
         }
         else {
             die "Insufficient Arguments : parent argument must be a Tree::Simple object";
         }
     }
     else {
-        $self->{_parent} = ROOT;
-        $self->{_depth} = -1;
+#        $self->{_parent} = ROOT;
+#        $self->{_depth} = -1;
+        $self->_setParent( $self->ROOT );
     }
 }
 
 sub _setParent {
     my ($self, $parent) = @_;
     (defined($parent) && 
-        (($parent eq ROOT) || (blessed($parent) && $parent->isa("Tree::Simple"))))
+        (($parent eq $self->ROOT) || (blessed($parent) && $parent->isa("Tree::Simple"))))
         || die "Insufficient Arguments : parent also must be a Tree::Simple object";
     $self->{_parent} = $parent;    
-    if ($parent eq ROOT) {
+    if ($parent eq $self->ROOT) {
         $self->{_depth} = -1;
     }
     else {
@@ -241,7 +245,7 @@ sub removeChildAt {
     # make sure that the removed child
     # is no longer connected to the parent
     # so we change its parent to ROOT
-    $removed_child->_setParent(ROOT);
+    $removed_child->_setParent($self->ROOT);
     # and now we make sure that the depth 
     # of the removed child is aligned correctly
     $removed_child->fixDepth() unless $removed_child->isLeaf();    
@@ -275,7 +279,7 @@ sub removeChild {
 
 sub getIndex {
     my ($self) = @_;
-    return -1 if $self->{_parent} eq ROOT;
+    return -1 if $self->{_parent} eq $self->ROOT;
     my $index = 0;
     foreach my $sibling ($self->{_parent}->getAllChildren()) {
         ("$sibling" eq "$self") && return $index;
@@ -404,7 +408,7 @@ sub isLeaf { $_[0]->getChildCount == 0 }
 
 sub isRoot {
     my ($self) = @_;
-    return (!defined($self->{_parent}) || $self->{_parent} eq ROOT);
+    return (!defined($self->{_parent}) || $self->{_parent} eq $self->ROOT);
 }
 
 sub size {
