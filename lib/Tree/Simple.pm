@@ -143,7 +143,7 @@ sub addChild {
 
 sub addChildren {
     my ($self, @trees) = @_;
-    $self->addChild($_) foreach @trees;
+    $self->insertChildren($self->getChildCount, @trees);
     $self;
 }
 
