@@ -139,12 +139,20 @@ sub addChild {
     my ($self, $tree) = @_;
     $self->_insertChildAt( $self->getChildCount, $tree );
     $self;
+    # This fails test 5 of 12_Tree_Simple_exceptions.t
+    # It is faster, though, but it negates possible overloading.
+#    splice @_, 1, 0, $_[0]->getChildCount;
+#    goto &insertChild;
 }
 
 sub addChildren {
-    my ($self, @trees) = @_;
-    $self->insertChildren($self->getChildCount, @trees);
-    $self;
+#    my ($self, @trees) = @_;
+#    $self->insertChildren($self->getChildCount, @trees);
+#    $self;
+    # This, apparently, doesn't fail. I suspect it's because we don't
+    # have a test for the same cases as we do for addChild().
+    splice @_, 1, 0, $_[0]->getChildCount;
+    goto &insertChildren;
 }
 
 sub _insertChildAt {
@@ -158,6 +166,7 @@ sub _insertChildAt {
     my $max = $self->getChildCount();
     ($index <= $max)
         || die "Index Out of Bounds : got ($index) expected no more than (" . $self->getChildCount() . ")";
+
     (@trees) 
         || die "Insufficient Arguments : no tree(s) to insert";    
 
@@ -174,24 +183,27 @@ sub _insertChildAt {
     if ($index == 0) {
         unshift @{$self->{_children}} => @trees;
     }
-    # if index is max, use this optimization
+    # if index is equal to the number of children
+    # then use this optimization    
     elsif ($index == $max) {
         push @{$self->{_children}} => @trees;
     }
     # otherwise do some heavy lifting here
     else {
-        $self->{_children} = [
-            @{$self->{_children}}[0 .. ($index - 1)],
-            @trees,
-            @{$self->{_children}}[$index .. $#{$self->{_children}}],
-            ];
+#        $self->{_children} = [
+#            @{$self->{_children}}[0 .. ($index - 1)],
+#            @trees,
+#            @{$self->{_children}}[$index .. $#{$self->{_children}}],
+#            ];
+        splice @{$self->{_children}}, $index, 0, @trees;
     }
+
+    $self;
 }
 *insertChildren = \&_insertChildAt;
 
-# insertChild is really the same as
-# insertChildren, you are just inserting
-# and array of one tree
+# insertChild is really the same as insertChildren, you are just
+# inserting an array of one tree
 *insertChild = \&insertChildren;
 
 sub removeChildAt {
@@ -217,10 +229,11 @@ sub removeChildAt {
     # otherwise do some heavy lifting here    
     else {
         $removed_child = $self->{_children}->[$index];
-        $self->{_children} = [
-            @{$self->{_children}}[0 .. ($index - 1)],
-            @{$self->{_children}}[($index + 1) .. $#{$self->{_children}}],
-            ];
+#        $self->{_children} = [
+#            @{$self->{_children}}[0 .. ($index - 1)],
+#            @{$self->{_children}}[($index + 1) .. $#{$self->{_children}}],
+#            ];
+        splice @{$self->{_children}}, $index, 1;
     }
     # make sure we fix the height
     $self->fixHeight();
@@ -248,7 +261,7 @@ sub removeChild {
     # so any non-ref arguments will get 
     # sent to removeChildAt
     return $self->removeChildAt($child_to_remove) unless ref($child_to_remove);
-    # now that we are confident its a reference
+    # now that we are confident it's a reference
     # make sure it is the right kind
     (blessed($child_to_remove) && $child_to_remove->isa("Tree::Simple")) 
         || die "Insufficient Arguments : Only valid child type is a Tree::Simple object";
@@ -311,46 +324,46 @@ sub insertSiblings {
 ## ----------------------------------------------------------------------------
 ## accessors
 
-sub getUID {
-    my ($self) = @_;
-    return $self->{_uid};
-}
+sub getUID { $_[0]{_uid} }
+#    my ($self) = @_;
+#    return $self->{_uid};
+#}
 
-sub getParent {
-    my ($self)= @_;
-    return $self->{_parent};
-}
+sub getParent { $_[0]{_parent} }
+#    my ($self)= @_;
+#    return $self->{_parent};
+#}
 
-sub getDepth {
-    my ($self) = @_;
-    return $self->{_depth};
-}
+sub getDepth { $_[0]{_depth} }
+#    my ($self) = @_;
+#    return $self->{_depth};
+#}
 
-sub getNodeValue {
-    my ($self) = @_;
-    return $self->{_node};
-}
+sub getNodeValue { $_[0]{_node} }
+#    my ($self) = @_;
+#    return $self->{_node};
+#}
 
 # this now has an alternate implementation
 # which eliminates the on demand recursion 
 # and instead stores the height in each node
-sub getHeight {
-    my ($self) = @_;
-    return $self->{_height};
-}
+sub getHeight { $_[0]{_height} }
+#    my ($self) = @_;
+#    return $self->{_height};
+#}
 
 # for backwards compatability
 *height = \&getHeight;
 
-sub getWidth {
-    my ($self) = @_;
-    return $self->{_width};
-}
+sub getWidth { $_[0]{_width} }
+#    my ($self) = @_;
+#    return $self->{_width};
+#}
 
-sub getChildCount {
-    my ($self) = @_;
-    return scalar @{$self->{_children}};
-}
+sub getChildCount { $#{$_[0]{_children}} + 1 }
+#    my ($self) = @_;
+#    return scalar @{$self->{_children}};
+#}
 
 sub getChild {
     my ($self, $index) = @_;
@@ -384,10 +397,10 @@ sub getAllSiblings {
 ## ----------------------------------------------------------------------------
 ## informational
 
-sub isLeaf {
-    my ($self) = @_;
-    return (scalar @{$self->{_children}} == 0);
-}
+sub isLeaf { $_[0]->getChildCount == 0 }
+#    my ($self) = @_;
+#    return (scalar @{$self->{_children}} == 0);
+#}
 
 sub isRoot {
     my ($self) = @_;
