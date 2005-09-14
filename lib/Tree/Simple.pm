@@ -1,6 +1,8 @@
 
 package Tree::Simple;
 
+use 5.6.0;
+
 use strict;
 use warnings;
 
@@ -26,12 +28,12 @@ use constant ROOT => "root";
 ### constructor
 
 sub new {
-	my ($_class, $node, $parent) = @_;
-	my $class = ref($_class) || $_class;
-	my $tree = {};
-	bless($tree, $class);
-	$tree->_init($node, $parent, []);  
-	return $tree;
+    my ($_class, $node, $parent) = @_;
+    my $class = ref($_class) || $_class;
+    my $tree = {};
+    bless($tree, $class);
+    $tree->_init($node, $parent, []);  
+    return $tree;
 }
 
 ### ---------------------------------------------------------------------------
@@ -42,20 +44,20 @@ sub new {
 ## private methods
 
 sub _init {
-	my ($self, $node, $parent, $children) = @_;
+    my ($self, $node, $parent, $children) = @_;
     # set the value of the unique id
     ($self->{_uid}) = ("$self" =~ /\((.*?)\)$/);
-	# set the value of the node
-	$self->{_node} = $node;
-	# and set the value of _children
-	$self->{_children} = $children;	
+    # set the value of the node
+    $self->{_node} = $node;
+    # and set the value of _children
+    $self->{_children} = $children;    
     # initialize the parent and depth here
     $self->{_parent} = undef;
     $self->{_depth}  = undef;    
     $self->{_height} = 1;
     $self->{_width}  = 1;
-	# Now check our $parent value
-	if (defined($parent)) {
+    # Now check our $parent value
+    if (defined($parent)) {
         if (blessed($parent) && $parent->isa("Tree::Simple")) {
             # and set it as our parent
             $parent->addChild($self);
@@ -67,26 +69,26 @@ sub _init {
         else {
             die "Insufficient Arguments : parent argument must be a Tree::Simple object";
         }
-	}
-	else {
-		$self->{_parent} = ROOT;
-		$self->{_depth} = -1;
-	}
+    }
+    else {
+        $self->{_parent} = ROOT;
+        $self->{_depth} = -1;
+    }
 }
 
 sub _setParent {
-	my ($self, $parent) = @_;
-	(defined($parent) && 
-		(($parent eq ROOT) || (blessed($parent) && $parent->isa("Tree::Simple"))))
-		|| die "Insufficient Arguments : parent also must be a Tree::Simple object";
-	$self->{_parent} = $parent;    
-	if ($parent eq ROOT) {
-		$self->{_depth} = -1;
-	}
-	else {
+    my ($self, $parent) = @_;
+    (defined($parent) && 
+        (($parent eq ROOT) || (blessed($parent) && $parent->isa("Tree::Simple"))))
+        || die "Insufficient Arguments : parent also must be a Tree::Simple object";
+    $self->{_parent} = $parent;    
+    if ($parent eq ROOT) {
+        $self->{_depth} = -1;
+    }
+    else {
         weaken($self->{_parent}) if $USE_WEAK_REFS;    
-		$self->{_depth} = $parent->getDepth() + 1;
-	}
+        $self->{_depth} = $parent->getDepth() + 1;
+    }
 }
 
 sub _detachParent {
@@ -119,9 +121,9 @@ sub _setWidth {
 ## mutators
 
 sub setNodeValue {
-	my ($self, $node_value) = @_;
-	(defined($node_value)) || die "Insufficient Arguments : must supply a value for node";
-	$self->{_node} = $node_value;
+    my ($self, $node_value) = @_;
+    (defined($node_value)) || die "Insufficient Arguments : must supply a value for node";
+    $self->{_node} = $node_value;
 }
 
 sub setUID {
@@ -134,53 +136,53 @@ sub setUID {
 ## child methods
 
 sub addChild {
-	my ($self, $tree) = @_;
-	(blessed($tree) && $tree->isa("Tree::Simple")) 
-		|| die "Insufficient Arguments : Child must be a Tree::Simple object";
-	$tree->_setParent($self);
+    my ($self, $tree) = @_;
+    (blessed($tree) && $tree->isa("Tree::Simple")) 
+        || die "Insufficient Arguments : Child must be a Tree::Simple object";
+    $tree->_setParent($self);
     $self->_setHeight($tree);
     $self->_setWidth($tree);    
-	$tree->fixDepth() unless $tree->isLeaf();
-	push @{$self->{_children}} => $tree;	
-	$self;
+    $tree->fixDepth() unless $tree->isLeaf();
+    push @{$self->{_children}} => $tree;    
+    $self;
 }
 
 sub addChildren {
-	my ($self, @trees) = @_;
-	$self->addChild($_) foreach @trees;
-	$self;
+    my ($self, @trees) = @_;
+    $self->addChild($_) foreach @trees;
+    $self;
 }
 
 sub insertChildren {
-	my ($self, $index, @trees) = @_;
-	(defined($index)) 
-		|| die "Insufficient Arguments : Cannot insert child without index";
-	# check the bounds of our children 
-	# against the index given
-	($index <= $self->getChildCount()) 
-		|| die "Index Out of Bounds : got ($index) expected no more than (" . $self->getChildCount() . ")";
-	(@trees) 
-		|| die "Insufficient Arguments : no tree(s) to insert";	
-	foreach my $tree (@trees) {
+    my ($self, $index, @trees) = @_;
+    (defined($index)) 
+        || die "Insufficient Arguments : Cannot insert child without index";
+    # check the bounds of our children 
+    # against the index given
+    ($index <= $self->getChildCount()) 
+        || die "Index Out of Bounds : got ($index) expected no more than (" . $self->getChildCount() . ")";
+    (@trees) 
+        || die "Insufficient Arguments : no tree(s) to insert";    
+    foreach my $tree (@trees) {
         (blessed($tree) && $tree->isa("Tree::Simple")) 
-			|| die "Insufficient Arguments : Child must be a Tree::Simple object";	
-		$tree->_setParent($self);
+            || die "Insufficient Arguments : Child must be a Tree::Simple object";    
+        $tree->_setParent($self);
         $self->_setHeight($tree);   
         $self->_setWidth($tree);                         
-		$tree->fixDepth() unless $tree->isLeaf();
-	}
-	# if index is zero, use this optimization
-	if ($index == 0) {
-		unshift @{$self->{_children}} => @trees;
-	}
-	# otherwise do some heavy lifting here
-	else {
-		$self->{_children} = [
-			@{$self->{_children}}[0 .. ($index - 1)],
-			@trees,
-			@{$self->{_children}}[$index .. $#{$self->{_children}}],
-			];
-	}
+        $tree->fixDepth() unless $tree->isLeaf();
+    }
+    # if index is zero, use this optimization
+    if ($index == 0) {
+        unshift @{$self->{_children}} => @trees;
+    }
+    # otherwise do some heavy lifting here
+    else {
+        $self->{_children} = [
+            @{$self->{_children}}[0 .. ($index - 1)],
+            @trees,
+            @{$self->{_children}}[$index .. $#{$self->{_children}}],
+            ];
+    }
 }
 
 # insertChild is really the same as
@@ -189,49 +191,49 @@ sub insertChildren {
 *insertChild = \&insertChildren;
 
 sub removeChildAt {
-	my ($self, $index) = @_;
-	(defined($index)) 
-		|| die "Insufficient Arguments : Cannot remove child without index.";
-	($self->getChildCount() != 0) 
-		|| die "Illegal Operation : There are no children to remove";		
-	# check the bounds of our children 
-	# against the index given		
-	($index < $self->getChildCount()) 
-		|| die "Index Out of Bounds : got ($index) expected no more than (" . $self->getChildCount() . ")";		
-	my $removed_child;
-	# if index is zero, use this optimization	
-	if ($index == 0) {
-		$removed_child = shift @{$self->{_children}};
-	}
-	# if index is equal to the number of children
-	# then use this optimization	
-	elsif ($index == $#{$self->{_children}}) {
-		$removed_child = pop @{$self->{_children}};	
-	}
-	# otherwise do some heavy lifting here	
-	else {
-		$removed_child = $self->{_children}->[$index];
-		$self->{_children} = [
-			@{$self->{_children}}[0 .. ($index - 1)],
-			@{$self->{_children}}[($index + 1) .. $#{$self->{_children}}],
-			];
-	}
+    my ($self, $index) = @_;
+    (defined($index)) 
+        || die "Insufficient Arguments : Cannot remove child without index.";
+    ($self->getChildCount() != 0) 
+        || die "Illegal Operation : There are no children to remove";        
+    # check the bounds of our children 
+    # against the index given        
+    ($index < $self->getChildCount()) 
+        || die "Index Out of Bounds : got ($index) expected no more than (" . $self->getChildCount() . ")";        
+    my $removed_child;
+    # if index is zero, use this optimization    
+    if ($index == 0) {
+        $removed_child = shift @{$self->{_children}};
+    }
+    # if index is equal to the number of children
+    # then use this optimization    
+    elsif ($index == $#{$self->{_children}}) {
+        $removed_child = pop @{$self->{_children}};    
+    }
+    # otherwise do some heavy lifting here    
+    else {
+        $removed_child = $self->{_children}->[$index];
+        $self->{_children} = [
+            @{$self->{_children}}[0 .. ($index - 1)],
+            @{$self->{_children}}[($index + 1) .. $#{$self->{_children}}],
+            ];
+    }
     # make sure we fix the height
     $self->fixHeight();
     $self->fixWidth();    
-	# make sure that the removed child
-	# is no longer connected to the parent
-	# so we change its parent to ROOT
-	$removed_child->_setParent(ROOT);
-	# and now we make sure that the depth 
-	# of the removed child is aligned correctly
-	$removed_child->fixDepth() unless $removed_child->isLeaf();	
-	# return ths removed child
-	# it is the responsibility 
-	# of the user of this module
-	# to properly dispose of this
-	# child (and all its sub-children)
-	return $removed_child;
+    # make sure that the removed child
+    # is no longer connected to the parent
+    # so we change its parent to ROOT
+    $removed_child->_setParent(ROOT);
+    # and now we make sure that the depth 
+    # of the removed child is aligned correctly
+    $removed_child->fixDepth() unless $removed_child->isLeaf();    
+    # return ths removed child
+    # it is the responsibility 
+    # of the user of this module
+    # to properly dispose of this
+    # child (and all its sub-children)
+    return $removed_child;
 }
 
 sub removeChild {
@@ -274,24 +276,24 @@ sub getIndex {
 # in things like the Keyable Tree object
 
 sub addSibling {
-	my ($self, @args) = @_;
-	(!$self->isRoot()) 
-		|| die "Insufficient Arguments : cannot add a sibling to a ROOT tree";
-	$self->{_parent}->addChild(@args);
+    my ($self, @args) = @_;
+    (!$self->isRoot()) 
+        || die "Insufficient Arguments : cannot add a sibling to a ROOT tree";
+    $self->{_parent}->addChild(@args);
 }
 
 sub addSiblings {
-	my ($self, @args) = @_;
-	(!$self->isRoot()) 
-		|| die "Insufficient Arguments : cannot add siblings to a ROOT tree";
-	$self->{_parent}->addChildren(@args);
+    my ($self, @args) = @_;
+    (!$self->isRoot()) 
+        || die "Insufficient Arguments : cannot add siblings to a ROOT tree";
+    $self->{_parent}->addChildren(@args);
 }
 
 sub insertSiblings {
-	my ($self, @args) = @_;
-	(!$self->isRoot()) 
-		|| die "Insufficient Arguments : cannot insert sibling(s) to a ROOT tree";
-	$self->{_parent}->insertChildren(@args);
+    my ($self, @args) = @_;
+    (!$self->isRoot()) 
+        || die "Insufficient Arguments : cannot insert sibling(s) to a ROOT tree";
+    $self->{_parent}->insertChildren(@args);
 }
 
 # insertSibling is really the same as
@@ -311,18 +313,18 @@ sub getUID {
 }
 
 sub getParent {
-	my ($self)= @_;
-	return $self->{_parent};
+    my ($self)= @_;
+    return $self->{_parent};
 }
 
 sub getDepth {
-	my ($self) = @_;
-	return $self->{_depth};
+    my ($self) = @_;
+    return $self->{_depth};
 }
 
 sub getNodeValue {
-	my ($self) = @_;
-	return $self->{_node};
+    my ($self) = @_;
+    return $self->{_node};
 }
 
 # this now has an alternate implementation
@@ -342,50 +344,50 @@ sub getWidth {
 }
 
 sub getChildCount {
-	my ($self) = @_;
-	return scalar @{$self->{_children}};
+    my ($self) = @_;
+    return scalar @{$self->{_children}};
 }
 
 sub getChild {
-	my ($self, $index) = @_;
-	(defined($index)) 
-		|| die "Insufficient Arguments : Cannot get child without index";
-	return $self->{_children}->[$index];
+    my ($self, $index) = @_;
+    (defined($index)) 
+        || die "Insufficient Arguments : Cannot get child without index";
+    return $self->{_children}->[$index];
 }
 
 sub getAllChildren {
-	my ($self) = @_;
-	return wantarray ?
-		@{$self->{_children}}
-		:
-		$self->{_children};
+    my ($self) = @_;
+    return wantarray ?
+        @{$self->{_children}}
+        :
+        $self->{_children};
 }
 
 sub getSibling {
-	my ($self, $index) = @_;
-	(!$self->isRoot()) 
-		|| die "Insufficient Arguments : cannot get siblings from a ROOT tree";	
-	$self->getParent()->getChild($index);
+    my ($self, $index) = @_;
+    (!$self->isRoot()) 
+        || die "Insufficient Arguments : cannot get siblings from a ROOT tree";    
+    $self->getParent()->getChild($index);
 }
 
 sub getAllSiblings {
-	my ($self) = @_;
-	(!$self->isRoot()) 
-		|| die "Insufficient Arguments : cannot get siblings from a ROOT tree";	
-	$self->getParent()->getAllChildren();
+    my ($self) = @_;
+    (!$self->isRoot()) 
+        || die "Insufficient Arguments : cannot get siblings from a ROOT tree";    
+    $self->getParent()->getAllChildren();
 }
 
 ## ----------------------------------------------------------------------------
 ## informational
 
 sub isLeaf {
-	my ($self) = @_;
-	return (scalar @{$self->{_children}} == 0);
+    my ($self) = @_;
+    return (scalar @{$self->{_children}} == 0);
 }
 
 sub isRoot {
-	my ($self) = @_;
-	return (!defined($self->{_parent}) || $self->{_parent} eq ROOT);
+    my ($self) = @_;
+    return (!defined($self->{_parent}) || $self->{_parent} eq ROOT);
 }
 
 sub size {
@@ -420,15 +422,15 @@ sub size {
 # This method is called automatically when 
 # a subtree is added to a child array
 sub fixDepth {
-	my ($self) = @_;
-	# make sure the tree's depth 
-	# is up to date all the way down
-	$self->traverse(sub {
-			my ($tree) = @_;
+    my ($self) = @_;
+    # make sure the tree's depth 
+    # is up to date all the way down
+    $self->traverse(sub {
+            my ($tree) = @_;
             return if $tree->isRoot();
-			$tree->{_depth} = $tree->getParent()->getDepth() + 1;
-		}
-	);
+            $tree->{_depth} = $tree->getParent()->getDepth() + 1;
+        }
+    );
 }
 
 # NOTE:
@@ -466,28 +468,28 @@ sub fixWidth {
 }
 
 sub traverse {
-	my ($self, $func) = @_;
-	(defined($func)) || die "Insufficient Arguments : Cannot traverse without traversal function";
-	(ref($func) eq "CODE") || die "Incorrect Object Type : traversal function is not a function";
-	foreach my $child ($self->getAllChildren()) { 
-		$func->($child);
-		$child->traverse($func);
-	}
+    my ($self, $func) = @_;
+    (defined($func)) || die "Insufficient Arguments : Cannot traverse without traversal function";
+    (ref($func) eq "CODE") || die "Incorrect Object Type : traversal function is not a function";
+    foreach my $child ($self->getAllChildren()) { 
+        $func->($child);
+        $child->traverse($func);
+    }
 }
 
 # this is an improved version of the 
 # old accept method, it now it more
 # accepting of its arguments
 sub accept {
-	my ($self, $visitor) = @_;
+    my ($self, $visitor) = @_;
     # it must be a blessed reference and ...
-	(blessed($visitor) && 
+    (blessed($visitor) && 
         # either a Tree::Simple::Visitor object, or ...
         ($visitor->isa("Tree::Simple::Visitor") || 
             # it must be an object which has a 'visit' method avaiable
             $visitor->can('visit')))
-		|| die "Insufficient Arguments : You must supply a valid Visitor object";
-	$visitor->visit($self);
+        || die "Insufficient Arguments : You must supply a valid Visitor object";
+    $visitor->visit($self);
 }
 
 ## ----------------------------------------------------------------------------
@@ -522,12 +524,12 @@ sub clone {
 # this allows cloning of single nodes while 
 # retaining connections to a tree, this is sloppy
 sub cloneShallow {
-	my ($self) = @_;
-	my $cloned_tree = { %{$self} };
-	bless($cloned_tree, ref($self));    
-	# just clone the node (if you can)
-	$cloned_tree->setNodeValue(_cloneNode($self->getNodeValue()));
-	return $cloned_tree;	
+    my ($self) = @_;
+    my $cloned_tree = { %{$self} };
+    bless($cloned_tree, ref($self));    
+    # just clone the node (if you can)
+    $cloned_tree->setNodeValue(_cloneNode($self->getNodeValue()));
+    return $cloned_tree;    
 }
 
 # this is a helper function which 
@@ -544,7 +546,7 @@ sub _cloneNode {
     return $node unless ref($node);
     # if it is in the cache, then return that
     return $seen->{$node} if exists ${$seen}{$node};
-    # if it is an object, then ...	
+    # if it is an object, then ...    
     if (blessed($node)) {
         # see if we can clone it
         if ($node->can('clone')) {
@@ -597,16 +599,16 @@ sub DESTROY {
     # we dont need to worry about
     # destruction, it will just happen
     return if $USE_WEAK_REFS;
-	my ($self) = @_;
+    my ($self) = @_;
     # we want to detach all our children from 
     # ourselves, this will break most of the 
     # connections and allow for things to get
     # reaped properly
-	unless (!$self->{_children} && scalar(@{$self->{_children}}) == 0) {
-		foreach my $child (@{$self->{_children}}) { 
-			defined $child && $child->_detachParent();
-		}
-	}
+    unless (!$self->{_children} && scalar(@{$self->{_children}}) == 0) {
+        foreach my $child (@{$self->{_children}}) { 
+            defined $child && $child->_detachParent();
+        }
+    }
     # we do not need to remove or undef the _children
     # of the _parent fields, this will cause some 
     # unwanted releasing of connections. 
