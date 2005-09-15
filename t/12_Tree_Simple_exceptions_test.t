@@ -54,7 +54,7 @@ throws_ok {
 # not giving an argument for addChild
 throws_ok {
 	$tree->addChild();
-} qr/^Insufficient Arguments \: Child must be a Tree\:\:Simple object/, '... this should die';
+} qr/^Insufficient Arguments : no tree\(s\) to insert/, '... this should die';
 
 # giving an bad argument for addChild
 throws_ok {
