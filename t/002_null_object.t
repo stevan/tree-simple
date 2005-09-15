@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 10;
+use Test::More tests => 13;
 
 my $CLASS = 'Tree::Simple';
 use_ok( $CLASS );
@@ -31,3 +31,8 @@ my $val = $obj->some_random_method;
 is( $val, $obj, "The return value of any method call on the null object is the null object" );
 
 is( $obj->method1->method2, $obj, "Method chaining works" );
+
+is( $CLASS->_null, $obj, "The _null method on $CLASS returns a null object" );
+my $tree = $CLASS->new;
+isa_ok( $tree, $CLASS );
+is( $tree->_null, $obj, "The _null method on an object of $CLASS returns a null object" );

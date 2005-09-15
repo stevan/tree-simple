@@ -15,7 +15,7 @@ sub new {
     my $class = shift;
     return bless {
         _children => [],
-        _parent => Tree::Simple::Null->new,
+        _parent => $class->_null,
     }, $class;
 }
 
@@ -53,8 +53,12 @@ sub remove_child {
     my ($child) = @_;
     @{$self->children} = ();
     #XXX Fix this to be more method-like
-    $child->{_parent} = Tree::Simple::Null->new;
+    $child->{_parent} = $child->_null;
     return $child;
+}
+
+sub _null {
+    return Tree::Simple::Null->new;
 }
 
 package Tree::Simple::Null;

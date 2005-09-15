@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 
 my $CLASS = 'Tree::Simple';
 use_ok( $CLASS )
@@ -26,7 +26,9 @@ my %methods = (
         parent children
         add_child remove_child
     )],
-#    private => [],
+    private => [ qw(
+        _null
+    )],
 #    book_keeping => [],
 );
 
@@ -39,8 +41,8 @@ isa_ok( $tree, $CLASS );
 
 can_ok( $tree, @{ $methods{public} } );
 delete @existing_methods{@{$methods{public}}};
-#can_ok( $tree, @{ $methods{private} } );
-#delete @existing_methods{@{$methods{private}}};
+can_ok( $tree, @{ $methods{private} } );
+delete @existing_methods{@{$methods{private}}};
 #can_ok( $tree, @{ $methods{book_keeping} } );
 #delete @existing_methods{@{$methods{book_keeping}}};
 
