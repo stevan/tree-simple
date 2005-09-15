@@ -30,21 +30,40 @@ sub is_leaf {
     return !$self->children;
 }
 
-sub parent { return $_[0]{_parent} }
+sub has_child {
+    my $self = shift;
+
+    my %temp = map { $_ => undef } @{$self->children};
+
+    my $rv = 1;
+    $rv &&= exists $temp{$_}
+        for @_;
+
+    return $rv;
+}
+
+sub parent { 
+    my $self = shift;
+    return (
+        DEFAULT { $self->{_parent} }
+        SCALARREF { \($self->{_parent}) }
+    );
+}
+
 sub children {
     my $self = shift;
     return (
         LIST { @{$self->{_children}} }
-        ARRAYREF { $self->{_children} }
         SCALAR { scalar @{$self->{_children}} }
+        ARRAYREF { $self->{_children} }
     );
 }
 
 sub add_child {
     my $self = shift;
     for ( @_ ) {
+        ${$_->parent} = $self;
         push @{$self->children}, $_;
-        $_->{_parent} = $self;
     }
     return $self;
 }
@@ -53,10 +72,8 @@ sub remove_child {
     my $self = shift;
 
     my @return;
-    for (@_) {
-        #XXX Fix this to be more method-like
-        $_->{_parent} = $_->_null;
-        my $old = $_;
+    for my $old (@_) {
+        ${$old->parent} = $old->_null;
         @{$self->children} = grep { $_ ne $old } @{$self->children};
         push @return, $old;
     }

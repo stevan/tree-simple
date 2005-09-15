@@ -24,7 +24,7 @@ my %methods = (
     public => [ qw(
         is_root is_leaf
         parent children
-        add_child remove_child
+        add_child remove_child has_child
     )],
     private => [ qw(
         _null
