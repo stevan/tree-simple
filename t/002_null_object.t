@@ -6,6 +6,12 @@ use Test::More tests => 10;
 my $CLASS = 'Tree::Simple';
 use_ok( $CLASS );
 
+# Test plan:
+# 1) The null object should inherit from Tree::Simple
+# 2) It should be false in all respects
+# 3) It should report that it can perform any method
+# 4) Any method call on it should return back the null object
+
 my $NULL_CLASS = $CLASS . '::Null';
 
 my $obj = $NULL_CLASS->new;

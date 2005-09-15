@@ -8,24 +8,36 @@ use warnings;
 
 our $VERSION = '1.99_00';
 
-use Scalar::Util qw(blessed weaken);
-use Class::Null;
+#use Scalar::Util qw(blessed weaken);
 
 sub new {
     my $class = shift;
-    return bless {}, $class;
+    return bless {
+        _children => [],
+        _parent => Tree::Simple::Null->new,
+    }, $class;
 }
 
 sub is_root {
-    return 1;
+    my $self = shift;
+    return !$self->parent;
 }
 
 sub is_leaf {
-    return 1;
+    my $self = shift;
+    return !@{$self->children};
 }
 
-sub parent {
-    return Tree::Simple::Null->new;
+sub parent { $_[0]{_parent} }
+sub children { $_[0]{_children} }
+
+sub add_child {
+    my $self = shift;
+    for ( @_ ) {
+        push @{$self->children}, $_;
+        $_->{_parent} = $self;
+    }
+    return $self;
 }
 
 package Tree::Simple::Null;

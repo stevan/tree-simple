@@ -1,13 +1,20 @@
 use strict;
 use warnings;
 
-use Test::More tests => 4;
+use Test::More tests => 5;
 
 my $CLASS = 'Tree::Simple';
 use_ok( $CLASS )
     or Test::More->builder->BAILOUT( "Cannot load $CLASS" );
 
-# These tests verify that the API conforms to spec.
+# Test plan:
+# 1) Verify that the API is correct. This will serve as documentation for which methods
+#    should be part of which kind of API.
+
+my %existing_methods = do {
+  no strict 'refs';
+  map { $_ => undef } grep exists &$_, keys %{ $CLASS . '::'};
+};
 
 my %methods = (
     class => [ qw(
@@ -15,7 +22,8 @@ my %methods = (
     )],
     public => [ qw(
         is_root is_leaf
-        parent
+        parent children
+        add_child
     )],
 #    private => [],
 #    book_keeping => [],
@@ -23,10 +31,16 @@ my %methods = (
 
 # These are the class methods
 can_ok( $CLASS, @{ $methods{class} } );
+delete @existing_methods{@{$methods{class}}};
 
 my $tree = $CLASS->new();
 isa_ok( $tree, $CLASS );
 
 can_ok( $tree, @{ $methods{public} } );
+delete @existing_methods{@{$methods{public}}};
 #can_ok( $tree, @{ $methods{private} } );
+#delete @existing_methods{@{$methods{private}}};
 #can_ok( $tree, @{ $methods{book_keeping} } );
+#delete @existing_methods{@{$methods{book_keeping}}};
+
+ok( keys %existing_methods == 0, "We've accounted for everything." );
