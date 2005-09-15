@@ -13,10 +13,11 @@ use Contextual::Return;
 
 sub new {
     my $class = shift;
-    return bless {
+    my $self = bless {
         _children => [],
         _parent => $class->_null,
     }, $class;
+    return $self;
 }
 
 sub is_root {
@@ -26,7 +27,7 @@ sub is_root {
 
 sub is_leaf {
     my $self = shift;
-    return !@{$self->children};
+    return !$self->children;
 }
 
 sub parent { return $_[0]{_parent} }
@@ -50,11 +51,20 @@ sub add_child {
 
 sub remove_child {
     my $self = shift;
-    my ($child) = @_;
-    @{$self->children} = ();
-    #XXX Fix this to be more method-like
-    $child->{_parent} = $child->_null;
-    return $child;
+
+    my @return;
+    for (@_) {
+        #XXX Fix this to be more method-like
+        $_->{_parent} = $_->_null;
+        my $old = $_;
+        @{$self->children} = grep { $_ ne $old } @{$self->children};
+        push @return, $old;
+    }
+
+    return (
+        LIST { @return }
+        SCALAR { $return[0] }
+    );
 }
 
 sub _null {
@@ -63,14 +73,15 @@ sub _null {
 
 package Tree::Simple::Null;
 
-our @ISA = qw( Tree::Simple );
+#XXX Add this in when appropriate.
+#our @ISA = qw( Tree::Simple );
 our $AUTOLOAD;
 
 use overload
     '""' => 'stringify',
     '0+' => 'numify',
     'bool' => 'boolify',
-    fallback => 1,
+        fallback => 1,
 ;
 
 {

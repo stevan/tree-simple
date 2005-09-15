@@ -16,7 +16,10 @@ my $NULL_CLASS = $CLASS . '::Null';
 
 my $obj = $NULL_CLASS->new;
 isa_ok( $obj, $NULL_CLASS );
-isa_ok( $obj, $CLASS );
+TODO: {
+    local $TODO = "It's not clear if this inheritance should be there.";
+    isa_ok( $obj, $CLASS );
+}
 
 ok( !$obj, "The null object is false" );
 TODO: {
