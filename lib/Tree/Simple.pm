@@ -9,6 +9,7 @@ use warnings;
 our $VERSION = '1.99_00';
 
 #use Scalar::Util qw(blessed weaken);
+use Contextual::Return;
 
 sub new {
     my $class = shift;
@@ -28,8 +29,15 @@ sub is_leaf {
     return !@{$self->children};
 }
 
-sub parent { $_[0]{_parent} }
-sub children { $_[0]{_children} }
+sub parent { return $_[0]{_parent} }
+sub children {
+    my $self = shift;
+    return (
+        LIST { @{$self->{_children}} }
+        ARRAYREF { $self->{_children} }
+        SCALAR { scalar @{$self->{_children}} }
+    );
+}
 
 sub add_child {
     my $self = shift;
@@ -38,6 +46,15 @@ sub add_child {
         $_->{_parent} = $self;
     }
     return $self;
+}
+
+sub remove_child {
+    my $self = shift;
+    my ($child) = @_;
+    @{$self->children} = ();
+    #XXX Fix this to be more method-like
+    $child->{_parent} = Tree::Simple::Null->new;
+    return $child;
 }
 
 package Tree::Simple::Null;
@@ -58,7 +75,7 @@ use overload
         my $class = shift;
         $singletons{$class} = bless {}, $class
             unless exists $singletons{$class};
-        $singletons{$class};
+        return $singletons{$class};
     }
 }
 
@@ -71,11 +88,9 @@ sub AUTOLOAD {
     goto &$AUTOLOAD;
 }
 
-sub defined { return }
-
-sub stringify { "" }
-sub numify { 0 }
-sub boolify { return }
+sub stringify { return ""; }
+sub numify { return 0; }
+sub boolify { return; }
 
 1;
 

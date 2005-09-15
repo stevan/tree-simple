@@ -10,6 +10,7 @@ use_ok( $CLASS )
 # Test plan:
 # 1) Verify that the API is correct. This will serve as documentation for which methods
 #    should be part of which kind of API.
+# 2) Verify that all methods in $CLASS have been classified appropriately
 
 my %existing_methods = do {
   no strict 'refs';
@@ -23,7 +24,7 @@ my %methods = (
     public => [ qw(
         is_root is_leaf
         parent children
-        add_child
+        add_child remove_child
     )],
 #    private => [],
 #    book_keeping => [],
