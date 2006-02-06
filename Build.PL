@@ -11,7 +11,7 @@ my $build = Module::Build->new(
     license => 'perl',
     requires => {
         'perl'         => '5.6.0',
-        'Scalar::Util' => '1.10',
+        'Scalar::Util' => '1.18',
     },
     build_requires => {
         'Test::More'      => '0.47',
