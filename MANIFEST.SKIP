@@ -4,6 +4,7 @@
 ^Makefile\.PL$
 ^blib
 ~$
+\.DS_Store
 \.bak$
 ^MANIFEST\.SKIP$
 CVS

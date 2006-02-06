@@ -1,6 +1,13 @@
 Revision history for Perl extension Tree::Simple.
 
-1.16 
+1.16 Mon Feb. 6, 2006
+    - converted to use Module::Build (Rob Kinyon)
+    - refactored &addChild and &addChildren to be 
+      implemented in terms of &insertChild and 
+      &insertChildren (Rob Kinyon)
+    - other misc. refactorings (Rob Kinyon)
+    - updated Scalar::Util version dependency (Stevan Little)
+    - updated copyrights for the new year (Stevan Little)        
 
 1.15 Thurs May 26, 2005
     - added optional use of weakened parent references
