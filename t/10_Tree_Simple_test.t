@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 291;
+use Test::More tests => 292;
 
 BEGIN { 
 	use_ok('Tree::Simple'); 
@@ -913,6 +913,70 @@ $tree->traverse(sub {
 
 # and compare the two
 is_deeply(\@_all_node_values, \@all_node_values, '... our nodes match our control nodes');
+
+# test traverse with both pre- and post- methods
+# make a control set of 
+# all the nodes we have with XML-style
+my @_all_node_values_post_traverse = qw(
+	1.0 
+		1.1 
+        1.1
+		1.2
+        1.2
+		1.3
+        1.3
+		1.4
+        1.4
+		1.5
+        1.5
+		1.6
+        1.6
+    1.0
+	2.0
+		2.1
+			2.1.1
+            2.1.1
+        2.1
+    2.0
+	3.0
+		3.1
+			3.1.1
+            3.1.1
+			3.1.2
+            3.1.2
+        3.1
+    3.0
+	4.0
+    4.0
+	5.0
+    5.0
+	6.0
+    6.0
+	7.0
+    7.0
+	8.0
+	8.0
+	9.0
+	9.0
+	);
+
+
+my @all_node_values_post_traverse;
+# now collect the nodes in the actual tree
+$tree->traverse(sub {
+	    my ($_tree) = @_;
+	    push @all_node_values_post_traverse => $_tree->getNodeValue();
+	},
+    sub {
+        my ($_tree) = @_;
+        push @all_node_values_post_traverse => $_tree->getNodeValue();
+    }
+);
+
+# and compare the two
+is_deeply(\@_all_node_values_post_traverse, \@all_node_values_post_traverse,
+  '... our nodes match our control nodes for post traverse method');
+
 
 ## ----------------------------------------------------------------------------
 ## test size

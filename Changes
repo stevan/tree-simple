@@ -1,5 +1,11 @@
 Revision history for Perl extension Tree::Simple.
 
+1.17 Mon Oct. 23, 2006
+    - make loading of Scalar::Util::weaken, completely 
+      optional
+    - added a $post_func optional arg to &traverse. Thanks 
+      to Mark Lawrence for the patch, docs and tests :)
+
 1.16 Mon Feb. 6, 2006
     - converted to use Module::Build (Rob Kinyon)
     - refactored &addChild and &addChildren to be 

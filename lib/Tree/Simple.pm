@@ -6,9 +6,9 @@ use 5.6.0;
 use strict;
 use warnings;
 
-our $VERSION = '1.16';
+our $VERSION = '1.17';
 
-use Scalar::Util qw(blessed weaken);
+use Scalar::Util qw(blessed);
 
 ## ----------------------------------------------------------------------------
 ## Tree::Simple
@@ -19,7 +19,10 @@ my $USE_WEAK_REFS;
 sub import {
     shift;
     return unless @_;
-    $USE_WEAK_REFS++ if lc($_[0]) eq 'use_weak_refs';
+    if (lc($_[0]) eq 'use_weak_refs') {
+        $USE_WEAK_REFS++;
+        *Tree::Simple::weaken = \&Scalar::Util::weaken;
+    }
 }
 
 ## class constants
@@ -429,12 +432,15 @@ sub fixWidth {
 }
 
 sub traverse {
-    my ($self, $func) = @_;
+    my ($self, $func, $post) = @_;
     (defined($func)) || die "Insufficient Arguments : Cannot traverse without traversal function";
     (ref($func) eq "CODE") || die "Incorrect Object Type : traversal function is not a function";
+    (ref($post) eq "CODE") || die "Incorrect Object Type : post traversal function is not a function"
+        if defined($post);
     foreach my $child ($self->getAllChildren()) { 
         $func->($child);
-        $child->traverse($func);
+        $child->traverse($func, $post);
+        defined($post) && $post->($child);
     }
 }
 
@@ -873,18 +879,37 @@ Returns true (1) if the invocant's "parent" field is B<ROOT>, returns false
 
 =over 4
 
-=item B<traverse ($func)>
+=item B<traverse ($func, ?$postfunc)>
 
-This method takes a single argument of a subroutine reference C<$func>. If the 
-argument is not defined and is not in fact a CODE reference then an exception is 
-thrown. The function is then applied recursively to all the children of the 
-invocant. Here is an example of a traversal function that will print out the 
+This method accepts two arguments a mandatory C<$func> and an optional
+C<$postfunc>. If the argument C<$func> is not defined then an exception
+is thrown. If C<$func> or C<$postfunc> are not in fact CODE references
+then an exception is thrown. The function C<$func> is then applied
+recursively to all the children of the invocant. If given, the function
+C<$postfunc> will be applied to each child after the child's children
+have been traversed.
+
+Here is an example of a traversal function that will print out the
 hierarchy as a tabbed in list.
 
   $tree->traverse(sub {
-        my ($_tree) = @_;
-        print (("\t" x $_tree->getDepth()), $_tree->getNodeValue(), "\n");
-        });
+      my ($_tree) = @_;
+      print (("\t" x $_tree->getDepth()), $_tree->getNodeValue(), "\n");
+  });
+
+Here is an example of a traversal function that will print out the 
+hierarchy in an XML-style format.
+
+  $tree->traverse(sub {
+      my ($_tree) = @_;
+      print ((' ' x $_tree->getDepth()),
+              '<', $_tree->getNodeValue(),'>',"\n");
+  },
+  sub {
+      my ($_tree) = @_;
+      print ((' ' x $_tree->getDepth()),
+              '</', $_tree->getNodeValue(),'>',"\n");
+  });
         
 =item B<size>
 
@@ -1263,6 +1288,8 @@ with B<Tree::Simple>.
 
 =item Thanks to Mark Thomas for his insight into how to best handle the I<height> 
 and I<width> properties without unessecary recursion.
+
+=item Thanks for Mark Lawrence for the &traverse post-func patch, tests and docs.
 
 =back
 

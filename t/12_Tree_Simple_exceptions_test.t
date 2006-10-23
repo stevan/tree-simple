@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 50;
+use Test::More tests => 52;
 use Test::Exception;
 
 ## ----------------------------------------------------------------------------
@@ -271,6 +271,17 @@ throws_ok {
 throws_ok {
 	$tree->traverse($BAD_OBJECT);
 } qr/^Incorrect Object Type \: traversal function is not a function/, '... this should die';
+
+# passing second non-ref arg to traverse
+throws_ok {
+	$tree->traverse(sub {}, "Fail");
+} qr/^Incorrect Object Type \: post traversal function is not a function/, '... this should die';
+
+# passing second non-code-ref arg to traverse
+throws_ok {
+	$tree->traverse(sub {}, $BAD_OBJECT);
+} qr/^Incorrect Object Type \: post traversal function is not a function/, '... this should die';
+
 
 # -----------------------------------------------
 # exceptions for accept
