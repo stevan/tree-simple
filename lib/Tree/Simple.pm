@@ -1,4 +1,3 @@
-
 package Tree::Simple;
 
 use 5.006;
@@ -225,7 +224,7 @@ sub removeChildAt {
     # and now we make sure that the depth 
     # of the removed child is aligned correctly
     $removed_child->fixDepth() unless $removed_child->isLeaf();    
-    # return ths removed child
+    # return this removed child
     # it is the responsibility 
     # of the user of this module
     # to properly dispose of this
@@ -237,7 +236,7 @@ sub removeChild {
     my ($self, $child_to_remove) = @_;
     (defined($child_to_remove))
         || die "Insufficient Arguments : you must specify a child to remove";
-    # maintain backwards compatability
+    # maintain backwards compatibility
     # so any non-ref arguments will get 
     # sent to removeChildAt
     return $self->removeChildAt($child_to_remove) unless ref($child_to_remove);
@@ -311,7 +310,7 @@ sub getNodeValue { $_[0]{_node}   }
 sub getWidth     { $_[0]{_width}  }
 sub getHeight    { $_[0]{_height} }
 
-# for backwards compatability
+# for backwards compatibility
 *height = \&getHeight;
 
 sub getChildCount { $#{$_[0]{_children}} + 1 }
@@ -370,7 +369,7 @@ sub size {
 # NOTE:
 # Occasionally one wants to have the 
 # depth available for various reasons
-# of convience. Sometimes that depth 
+# of convenience. Sometimes that depth 
 # field is not always correct.
 # If you create your tree in a top-down
 # manner, this is usually not an issue
@@ -400,7 +399,7 @@ sub fixDepth {
 
 # NOTE:
 # This method is used to fix any height 
-# discrepencies which might arise when 
+# discrepancies which might arise when 
 # you remove a sub-tree
 sub fixHeight {
     my ($self) = @_;
@@ -454,7 +453,7 @@ sub accept {
     (blessed($visitor) && 
         # either a Tree::Simple::Visitor object, or ...
         ($visitor->isa("Tree::Simple::Visitor") || 
-            # it must be an object which has a 'visit' method avaiable
+            # it must be an object which has a 'visit' method available
             $visitor->can('visit')))
         || die "Insufficient Arguments : You must supply a valid Visitor object";
     $visitor->visit($self);
@@ -504,7 +503,7 @@ sub cloneShallow {
 # recursively clones the node
 sub _cloneNode {
     my ($node, $seen) = @_;
-    # create a cache if we dont already
+    # create a cache if we don't already
     # have one to prevent circular refs
     # from being copied more than once
     $seen = {} unless defined $seen;
@@ -564,7 +563,7 @@ sub _cloneNode {
 
 sub DESTROY {
     # if we are using weak refs 
-    # we dont need to worry about
+    # we don't need to worry about
     # destruction, it will just happen
     return if $USE_WEAK_REFS;
     my ($self) = @_;
@@ -751,7 +750,7 @@ C<@trees> just as C<insertChild> does.
 
 =item B<removeChild> ($child | $index)>
 
-Accepts two different arguemnts. If given a B<Tree::Simple> object (C<$child>), 
+Accepts two different arguments. If given a B<Tree::Simple> object (C<$child>), 
 this method finds that specific C<$child> by comparing it with all the other 
 children until it finds a match. At which point the C<$child> is removed. If 
 no match is found, and exception is thrown. If a non-B<Tree::Simple> object 
@@ -919,7 +918,7 @@ Returns the total number of nodes in the current tree and all its sub-trees.
 =item B<height>
 
 This method has also been B<deprecated> in favor of the C<getHeight> method above, 
-it remains as an alias to C<getHeight> for backwards compatability. 
+it remains as an alias to C<getHeight> for backwards compatibility. 
 
 B<NOTE:> This is also no longer a recursive method which get's it's value on demand, 
 but a value stored in the Tree::Simple object itself, hopefully making it much 
@@ -946,7 +945,7 @@ B<Tree::Simple::VisitorFactory>.
 
 =head2 Cloning Methods
 
-Cloning a tree can be an extremly expensive operation for large trees, so we provide 
+Cloning a tree can be an extremely expensive operation for large trees, so we provide 
 two options for cloning, a deep clone and a shallow clone.
 
 When a Tree::Simple object is cloned, the node is deep-copied in the following manner. 
@@ -995,7 +994,7 @@ down the tree. It also cleans up it's parental relations as well.
 
 Because of perl's reference counting scheme and how that interacts with circular 
 references, if you want an object to be properly reaped you should manually call 
-C<DESTROY>. This is especially nessecary if your object has any children. See the 
+C<DESTROY>. This is especially necessary if your object has any children. See the 
 section on L<CIRCULAR REFERENCES> for more information.
 
 =item B<fixDepth>
@@ -1046,7 +1045,7 @@ This method will set the height field based upon the height of the given C<$chil
 
 =head1 CIRCULAR REFERENCES
 
-I have revised the model by which Tree::Simple deals with ciruclar references. 
+I have revised the model by which Tree::Simple deals with circular references. 
 In the past all circular references had to be manually destroyed by calling 
 DESTROY. The call to DESTROY would then call DESTROY on all the children, and 
 therefore cascade down the tree. This however was not always what was needed, 
@@ -1054,7 +1053,7 @@ nor what made sense, so I have now revised the model to handle things in what
 I feel is a more consistent and sane way. 
 
 Circular references are now managed with the simple idea that the parent makes 
-the descisions for the child. This means that child-to-parent references are 
+the decisions for the child. This means that child-to-parent references are 
 weak, while parent-to-child references are strong. So if a parent is destroyed 
 it will force all it's children to detach from it, however, if a child is 
 destroyed it will not be detached from it's parent.
@@ -1072,7 +1071,7 @@ setting like this:
 And from that point on Tree::Simple will use weak references to allow for 
 perl's reference counting to clean things up properly.
 
-For those who are unfamilar with weak references, and how they affect the 
+For those who are unfamiliar with weak references, and how they affect the 
 reference counts, here is a simple illustration. First is the normal model 
 that Tree::Simple uses:
  
@@ -1157,7 +1156,7 @@ module, they are describes below and available on CPAN.
 
 Also, the author of L<Data::TreeDumper> and I have worked together 
 to make sure that B<Tree::Simple> and his module work well together. 
-If you need a quick and handy way to dump out a Tree::Simple heirarchy, 
+If you need a quick and handy way to dump out a Tree::Simple hierarchy, 
 this module does an excellent job (and plenty more as well).
 
 I have also recently stumbled upon some packaged distributions of 
@@ -1288,7 +1287,7 @@ with B<Tree::Simple>.
 =item Thanks to whomever submitted the memory leak bug to RT (#7512). 
 
 =item Thanks to Mark Thomas for his insight into how to best handle the I<height> 
-and I<width> properties without unessecary recursion.
+and I<width> properties without unnecessary recursion.
 
 =item Thanks for Mark Lawrence for the &traverse post-func patch, tests and docs.
 
