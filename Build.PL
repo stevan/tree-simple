@@ -19,6 +19,11 @@ my $build = Module::Build->new(
     },
     create_makefile_pl => 'traditional',
     recursive_test_files => 1,
+    meta_merge => {
+        resources => {
+            repository => 'https://github.com/stevan/tree-simple',
+        },
+    },
 );
 
 $build->create_build_script;
