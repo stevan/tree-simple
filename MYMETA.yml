@@ -17,10 +17,10 @@ name: Tree-Simple
 provides:
   Tree::Simple:
     file: lib/Tree/Simple.pm
-    version: 1.20
+    version: 1.21
   Tree::Simple::Visitor:
     file: lib/Tree/Simple/Visitor.pm
-    version: 1.20
+    version: 1.21
 requires:
   Scalar::Util: 1.18
   constant: 0
@@ -28,4 +28,4 @@ requires:
   warnings: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 1.20
+version: 1.21
