@@ -23,6 +23,9 @@ provides:
     version: 1.11
 requires:
   Scalar::Util: 1.18
+  constant: 0
+  strict: 0
+  warnings: 0
 resources:
   license: http://dev.perl.org/licenses/
 version: 1.20

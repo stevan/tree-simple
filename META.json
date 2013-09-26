@@ -27,7 +27,10 @@
       },
       "runtime" : {
          "requires" : {
-            "Scalar::Util" : "1.18"
+            "Scalar::Util" : "1.18",
+            "constant" : "0",
+            "strict" : "0",
+            "warnings" : "0"
          }
       }
    },
@@ -38,7 +41,7 @@
       },
       "Tree::Simple::Visitor" : {
          "file" : "lib/Tree/Simple/Visitor.pm",
-         "version" : "1.11"
+         "version" : "1.20"
       }
    },
    "release_status" : "stable",

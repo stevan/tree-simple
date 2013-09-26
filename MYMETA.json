@@ -27,7 +27,10 @@
       },
       "runtime" : {
          "requires" : {
-            "Scalar::Util" : "1.18"
+            "Scalar::Util" : "1.18",
+            "constant" : "0",
+            "strict" : "0",
+            "warnings" : "0"
          }
       }
    },
