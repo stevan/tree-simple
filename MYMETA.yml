@@ -20,7 +20,7 @@ provides:
     version: 1.20
   Tree::Simple::Visitor:
     file: lib/Tree/Simple/Visitor.pm
-    version: 1.11
+    version: 1.20
 requires:
   Scalar::Util: 1.18
   constant: 0

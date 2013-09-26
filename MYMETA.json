@@ -41,7 +41,7 @@
       },
       "Tree::Simple::Visitor" : {
          "file" : "lib/Tree/Simple/Visitor.pm",
-         "version" : "1.11"
+         "version" : "1.20"
       }
    },
    "release_status" : "stable",
