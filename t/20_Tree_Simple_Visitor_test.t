@@ -6,8 +6,8 @@ use warnings;
 use Test::More tests => 37;
 use Test::Exception;
 
-BEGIN { 
-	use_ok('Tree::Simple::Visitor'); 	
+BEGIN {
+	use_ok('Tree::Simple::Visitor');
 };
 
 use Tree::Simple;
@@ -33,10 +33,10 @@ my $tree = Tree::Simple->new(Tree::Simple->ROOT)
                                             Tree::Simple->new("1.1"),
                                             Tree::Simple->new("1.2")
                                                         ->addChild(Tree::Simple->new("1.2.1")),
-                                            Tree::Simple->new("1.3")                                            
+                                            Tree::Simple->new("1.3")
                                         ),
 							Tree::Simple->new("2"),
-							Tree::Simple->new("3"),							
+							Tree::Simple->new("3"),
 					   );
 isa_ok($tree, 'Tree::Simple');
 
@@ -63,19 +63,19 @@ is_deeply(
         scalar $visitor->getResults(),
         [ qw(_1 _1.1 _1.2 _1.2.1 _1.3 _2 _3)],
         '... got what we expected');
-        
+
 # test some exceptions
 
 throws_ok {
-    $visitor->setNodeFilter();        
+    $visitor->setNodeFilter();
 } qr/Insufficient Arguments/, '... this should die';
 
 throws_ok {
-    $visitor->setNodeFilter([]);        
+    $visitor->setNodeFilter([]);
 } qr/Insufficient Arguments/, '... this should die';
 
 # -----------------------------------------------
-# test the old style interface for backwards 
+# test the old style interface for backwards
 # compatability
 # -----------------------------------------------
 
@@ -103,14 +103,14 @@ isa_ok($visitor3, 'Tree::Simple::Visitor');
 # we pass a bad depth (string)
 throws_ok {
 	my $test = Tree::Simple::Visitor->new($SIMPLE_SUB, "Fail")
-} qr/Insufficient Arguments \: Depth arguement must be either RECURSIVE or CHILDREN_ONLY/, 
+} qr/Insufficient Arguments \: Depth arguement must be either RECURSIVE or CHILDREN_ONLY/,
    '... we are expecting this error';
-   
+
 # we pass a bad depth (numeric)
 throws_ok {
 	my $test = Tree::Simple::Visitor->new($SIMPLE_SUB, 100)
-} qr/Insufficient Arguments \: Depth arguement must be either RECURSIVE or CHILDREN_ONLY/, 
-   '... we are expecting this error';     
+} qr/Insufficient Arguments \: Depth arguement must be either RECURSIVE or CHILDREN_ONLY/,
+   '... we are expecting this error';
 
 # we pass a non-ref func argument
 throws_ok {
@@ -118,11 +118,11 @@ throws_ok {
 } qr/Insufficient Arguments \: filter function argument must be a subroutine reference/,
    '... we are expecting this error';
 
-# we pass a non-code-ref func arguement   
+# we pass a non-code-ref func arguement
 throws_ok {
 	my $test = Tree::Simple::Visitor->new([]);
 } qr/Insufficient Arguments \: filter function argument must be a subroutine reference/,
-   '... we are expecting this error';   
+   '... we are expecting this error';
 
 # -----------------------------------------------
 # test other exceptions
@@ -135,38 +135,38 @@ can_ok($visitor1, 'visit');
 throws_ok {
 	$visitor1->visit();
 } qr/Insufficient Arguments \: You must supply a valid Tree\:\:Simple object/,
-   '... we are expecting this error'; 
-   
+   '... we are expecting this error';
+
 # test non-ref arg
 throws_ok {
 	$visitor1->visit("Fail");
 } qr/Insufficient Arguments \: You must supply a valid Tree\:\:Simple object/,
-   '... we are expecting this error'; 	 
-   
+   '... we are expecting this error';
+
 # test non-object ref arg
 throws_ok {
 	$visitor1->visit([]);
 } qr/Insufficient Arguments \: You must supply a valid Tree\:\:Simple object/,
-   '... we are expecting this error'; 	   
-   
-my $BAD_OBJECT = bless({}, "Test");   
-   
+   '... we are expecting this error';
+
+my $BAD_OBJECT = bless({}, "Test");
+
 # test non-Tree::Simple object arg
 throws_ok {
 	$visitor1->visit($BAD_OBJECT);
 } qr/Insufficient Arguments \: You must supply a valid Tree\:\:Simple object/,
-   '... we are expecting this error'; 	   
-   
+   '... we are expecting this error';
+
 
 # -----------------------------------------------
 # Test accept & visit
 # -----------------------------------------------
-# Note: 
+# Note:
 # this test could be made more robust by actually
-# getting results and testing them from the 
+# getting results and testing them from the
 # Visitor object. But for right now it is good
 # enough to have the code coverage, and know
-# all the peices work.
+# all the pieces work.
 # -----------------------------------------------
 
 # now make a tree
@@ -174,7 +174,7 @@ my $tree1 = Tree::Simple->new(Tree::Simple->ROOT)
 					   ->addChildren(
 							Tree::Simple->new("1.0"),
 							Tree::Simple->new("2.0"),
-							Tree::Simple->new("3.0"),							
+							Tree::Simple->new("3.0"),
 					   );
 isa_ok($tree1, 'Tree::Simple');
 
@@ -206,10 +206,10 @@ lives_ok {
 
     $visitor->includeTrunk("true");
     ok($visitor->includeTrunk(), '... this should be true now');
-    
+
     $visitor->includeTrunk(undef);
     ok($visitor->includeTrunk(), '... this should be true still');
-    
+
     $visitor->includeTrunk("");
     ok(!$visitor->includeTrunk(), '... this should be false again');
 }
@@ -217,14 +217,14 @@ lives_ok {
 # check that clearNodeFilter works as we expect it to
 {
     my $visitor = Tree::Simple::Visitor->new();
-    
+
     my $filter = sub { "filter" };
-    
+
     $visitor->setNodeFilter($filter);
     is($visitor->getNodeFilter(), $filter, 'our node filter is set correctly');
-    
+
     $visitor->clearNodeFilter();
-    ok(! defined($visitor->getNodeFilter()), '... our node filter has now been undefined'); 
+    ok(! defined($visitor->getNodeFilter()), '... our node filter has now been undefined');
 }
 
 

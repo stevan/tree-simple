@@ -1,4 +1,3 @@
-
 package Tree::Simple::Visitor;
 
 use strict;
@@ -7,7 +6,7 @@ use warnings;
 our $VERSION = '1.11';
 
 use Scalar::Util qw(blessed);
- 
+
 ## class constants
 
 use constant RECURSIVE     => 0x01;
@@ -18,11 +17,11 @@ use constant CHILDREN_ONLY => 0x10;
 sub new {
 	my ($_class, $func, $depth) = @_;
 	if (defined($depth)){
-		($depth =~ /\d+/ && ($depth == RECURSIVE || $depth == CHILDREN_ONLY)) 
+		($depth =~ /\d+/ && ($depth == RECURSIVE || $depth == CHILDREN_ONLY))
 			|| die "Insufficient Arguments : Depth arguement must be either RECURSIVE or CHILDREN_ONLY";
-	}    
+	}
 	my $class = ref($_class) || $_class;
-    # if we have not supplied a $func 
+    # if we have not supplied a $func
     # it is automatically RECURSIVE
     $depth = RECURSIVE unless defined $func;
 	my $visitor = {
@@ -32,7 +31,7 @@ sub new {
 	$visitor->_init();
     if (defined $func) {
         $visitor->setNodeFilter($func);
-        $visitor->includeTrunk(1);    
+        $visitor->includeTrunk(1);
     }
 	return $visitor;
 }
@@ -56,22 +55,22 @@ sub includeTrunk {
 
 sub getNodeFilter {
     my ($self) = @_;
-	return $self->{_filter_function}; 
+	return $self->{_filter_function};
 }
 
 sub clearNodeFilter {
     my ($self) = @_;
-	$self->{_filter_function} = undef;     
+	$self->{_filter_function} = undef;
 }
 
 sub setNodeFilter {
     my ($self, $filter_function) = @_;
-	(defined($filter_function) && ref($filter_function) eq "CODE") 
+	(defined($filter_function) && ref($filter_function) eq "CODE")
 		|| die "Insufficient Arguments : filter function argument must be a subroutine reference";
-	$self->{_filter_function} = $filter_function; 
+	$self->{_filter_function} = $filter_function;
 }
 
-# results methods 
+# results methods
 
 sub setResults {
     my ($self, @results) = @_;
@@ -95,12 +94,12 @@ sub visit {
 	my @results;
 	my $func;
     if ($self->{_filter_function}) {
-        $func = sub { push @results => $self->{_filter_function}->(@_) };    
+        $func = sub { push @results => $self->{_filter_function}->(@_) };
     }
     else {
-        $func = sub { push @results => $_[0]->getNodeValue() }; 
+        $func = sub { push @results => $_[0]->getNodeValue() };
     }
-	# always apply the function 
+	# always apply the function
 	# to the tree's node
     $func->($tree) unless defined $self->{_include_trunk};
 	# then recursively to all its children
@@ -128,10 +127,10 @@ Tree::Simple::Visitor - Visitor object for Tree::Simple objects
 
   use Tree::Simple;
   use Tree::Simple::Visitor;
-  
+
   # create a visitor instance
-  my $visitor = Tree::Simple::Visitor->new();  							 
-  
+  my $visitor = Tree::Simple::Visitor->new();
+
   # create a tree to visit
   my $tree = Tree::Simple->new(Tree::Simple->ROOT)
                          ->addChildren(
@@ -143,25 +142,25 @@ Tree::Simple::Visitor - Visitor object for Tree::Simple objects
                              Tree::Simple->new("3.0")
                              );
 
-  # by default this will collect all the 
-  # node values in depth-first order into 
-  # our results 
-  $tree->accept($visitor);	  
-  
+  # by default this will collect all the
+  # node values in depth-first order into
+  # our results
+  $tree->accept($visitor);
+
   # get our results and print them
-  print join ", ", $visitor->getResults();  # prints "1.0, 2.0, 2.1.0, 3.0" 
-  
-  # for more complex node objects, you can specify 
+  print join ", ", $visitor->getResults();  # prints "1.0, 2.0, 2.1.0, 3.0"
+
+  # for more complex node objects, you can specify
   # a node filter which will be used to extract the
   # information desired from each node
-  $visitor->setNodeFilter(sub { 
+  $visitor->setNodeFilter(sub {
                 my ($t) = @_;
                 return $t->getNodeValue()->description();
-                });  
-                  
+                });
+
   # NOTE: this object has changed, but it still remains
   # backwards compatible to the older version, see the
-  # DESCRIPTION section below for more details                  
+  # DESCRIPTION section below for more details
 
 =head1 DESCRIPTION
 
@@ -171,22 +170,22 @@ While I have changed a number of things about this module, I have kept it backwa
 
   my @accumulator;
   my $visitor = Tree::Simple::Visitor->new(sub {
-                        my ($tree) = @_;  
-                        push @accumlator, $tree->getNodeValue();
-                        }, 
+                        my ($tree) = @_;
+                        push @accumulator, $tree->getNodeValue();
+                        },
                         Tree::Simple::Visitor->RECURSIVE);
-  							 
-  $tree->accept($visitor);							 							 						
-  
+
+  $tree->accept($visitor);
+
   print join ", ", @accumulator;  # prints "1.0, 2.0, 2.1.0, 3.0"
-  
+
 But is better expressed as this:
 
-  my $visitor = Tree::Simple::Visitor->new();  							 
-  $tree->accept($visitor);	  
-  print join ", ", $visitor->getResults();  # prints "1.0, 2.0, 2.1.0, 3.0"  
+  my $visitor = Tree::Simple::Visitor->new();
+  $tree->accept($visitor);
+  print join ", ", $visitor->getResults();  # prints "1.0, 2.0, 2.1.0, 3.0"
 
-This object is still pretty much a wrapper around the Tree::Simple C<traverse> method, and can be thought of as a depth-first traversal Visitor object.  
+This object is still pretty much a wrapper around the Tree::Simple C<traverse> method, and can be thought of as a depth-first traversal Visitor object.
 
 =head1 METHODS
 
@@ -238,17 +237,17 @@ These constants are part of the old-style interface, and therefore will eventual
 
 =item B<RECURSIVE>
 
-If passed this constant in the constructor, the function will be applied recursively down the hierarchy of B<Tree::Simple> objects. 
+If passed this constant in the constructor, the function will be applied recursively down the hierarchy of B<Tree::Simple> objects.
 
 =item B<CHILDREN_ONLY>
 
-If passed this constant in the constructor, the function will be applied to the immediate children of the B<Tree::Simple> object. 
+If passed this constant in the constructor, the function will be applied to the immediate children of the B<Tree::Simple> object.
 
 =back
 
 =head1 BUGS
 
-None that I am aware of. The code is pretty thoroughly tested (see B<CODE COVERAGE> section in B<Tree::Simple>) and is based on an (non-publicly released) module which I had used in production systems for about 2 years without incident. Of course, if you find a bug, let me know, and I will be sure to fix it. 
+None that I am aware of. The code is pretty thoroughly tested (see B<CODE COVERAGE> section in B<Tree::Simple>) and is based on an (non-publicly released) module which I had used in production systems for about 2 years without incident. Of course, if you find a bug, let me know, and I will be sure to fix it.
 
 =head1 SEE ALSO
 
@@ -265,6 +264,6 @@ Copyright 2004-2006 by Infinity Interactive, Inc.
 L<http://www.iinteractive.com>
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself. 
+it under the same terms as Perl itself.
 
 =cut
