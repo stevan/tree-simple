@@ -25,9 +25,12 @@ my(%params) =
 	PL_FILES  => {},
 	PREREQ_PM =>
 	{
+		'constant'        => 0,
 		'Scalar::Util'    => '1.18',
+		'strict'          => 0,
 		'Test::Exception' => '0.15',
 		'Test::More'      => '0.47'
+		'warnings'        => 0,
 	},
 	VERSION_FROM => 'lib/Tree/Simple.pm',
 );

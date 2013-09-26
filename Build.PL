@@ -21,7 +21,10 @@ Module::Build -> new
 	},
 	requires =>
 	{
+		'constant'     => 0,
 		'Scalar::Util' => '1.18',
+		'strict'       => 0,
+		'warnings'     => 0,
 	},
 	resources =>
 	{

@@ -1,7 +1,5 @@
 package Tree::Simple;
 
-use 5.006;
-
 use strict;
 use warnings;
 
