@@ -1,7 +1,7 @@
 Revision history for Perl extension Tree::Simple.
 
 1.20  Thu Sep 26 11:16:00 2013
-	- Import source from https://github.com/stevan/tree-simple.
+	- Merge source from https://github.com/stevan/tree-simple.
 	- Close github issues.
 	- Add bugtracker and license to Build.PL and Makefile.PL.
 

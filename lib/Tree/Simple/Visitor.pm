@@ -101,7 +101,9 @@ sub visit {
     }
 	# always apply the function
 	# to the tree's node
-    $func->($tree) unless defined $self->{_include_trunk};
+
+    $func->($tree) if (defined($self->{_include_trunk}) && $self->{_include_trunk});
+
 	# then recursively to all its children
 	# if the object is configured that way
 	$tree->traverse($func) if ($self->{depth} == RECURSIVE);
