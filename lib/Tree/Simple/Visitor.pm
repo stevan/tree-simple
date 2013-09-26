@@ -1,4 +1,3 @@
-
 package Tree::Simple::Visitor;
 
 use strict;
@@ -172,7 +171,7 @@ While I have changed a number of things about this module, I have kept it backwa
   my @accumulator;
   my $visitor = Tree::Simple::Visitor->new(sub {
                         my ($tree) = @_;  
-                        push @accumlator, $tree->getNodeValue();
+                        push @accumulator, $tree->getNodeValue();
                         }, 
                         Tree::Simple::Visitor->RECURSIVE);
   							 
