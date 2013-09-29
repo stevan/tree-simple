@@ -26,9 +26,11 @@ Module::Build -> new
 		'strict'       => 0,
 		'warnings'     => 0,
 	},
-	resources =>
-	{
-		bugtracker => 'https://github.com/stevan/tree-simple',
-		license    => 'https://www.gnu.org/licenses/license-list.html#PerlLicense',
+	meta_merge => {
+		resources => {
+			repository => 'https://github.com/stevan/tree-simple',
+			bugtracker => 'https://github.com/stevan/tree-simple/issues',
+			license    => 'https://www.gnu.org/licenses/license-list.html#PerlLicense',
+		},
 	},
 ) -> create_build_script;
