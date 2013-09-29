@@ -195,7 +195,7 @@ This object is still pretty much a wrapper around the Tree::Simple C<traverse> m
 
 =item B<new ($func, $depth)>
 
-The new style interface means that all arguments to the constructor are now optional. As a means of defining the usage of the old and new, when no arguments are sent to the constructor, it is assumed that the new style interface is being used. In the new style, the C<$depth> is always assumed to be equivalent to C<RECURSIVE> and the C<$func> argument can be set with C<setNodeFilter> instead. This is the recommended way of doing things now. If you have been using the old way, it is still there, and I will maintain backwards compatability for a few more version before removing it entirely. If you are using this module (and I don't even know if anyone actually is) you have been warned. Please contact me if this will be a problem.
+The new style interface means that all arguments to the constructor are now optional. As a means of defining the usage of the old and new, when no arguments are sent to the constructor, it is assumed that the new style interface is being used. In the new style, the C<$depth> is always assumed to be equivalent to C<RECURSIVE> and the C<$func> argument can be set with C<setNodeFilter> instead. This is the recommended way of doing things now. If you have been using the old way, it is still there, and I will maintain backwards compatibility for a few more version before removing it entirely. If you are using this module (and I don't even know if anyone actually is) you have been warned. Please contact me if this will be a problem.
 
 The old style constructor documentation is retained her for reference:
 
@@ -223,7 +223,7 @@ This method returns the accumulated results of the application of the node filte
 
 =item B<setResults>
 
-This method should not really be used outside of this class, as it just would not make any sense to. It is included in this class and in this documenation to facilitate subclassing of this class for your own needs. If you desire to clear the results, then you can simply call C<setResults> with no argument.
+This method should not really be used outside of this class, as it just would not make any sense to. It is included in this class and in this documentation to facilitate subclassing of this class for your own needs. If you desire to clear the results, then you can simply call C<setResults> with no argument.
 
 =item B<visit ($tree)>
 
