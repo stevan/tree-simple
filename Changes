@@ -1,5 +1,8 @@
 Revision history for Perl extension Tree::Simple.
 
+1.22  Mon Sep 30 08:35:00 2013
+	- Metadata fixes in Build.PL and correct bugtracker queue in Makefile.PL. Thanx to dsteinbrunner (via github).
+
 1.21  Thu Sep 26 13:08:00 2013
 	- Fix syntax error in Makefile.PL.
 

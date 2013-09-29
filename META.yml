@@ -17,15 +17,17 @@ name: Tree-Simple
 provides:
   Tree::Simple:
     file: lib/Tree/Simple.pm
-    version: 1.21
+    version: 1.22
   Tree::Simple::Visitor:
     file: lib/Tree/Simple/Visitor.pm
-    version: 1.21
+    version: 1.22
 requires:
   Scalar::Util: 1.18
   constant: 0
   strict: 0
   warnings: 0
 resources:
-  license: http://dev.perl.org/licenses/
-version: 1.21
+  bugtracker: https://github.com/stevan/tree-simple/issues
+  license: https://www.gnu.org/licenses/license-list.html#PerlLicense
+  repository: https://github.com/stevan/tree-simple
+version: 1.22
