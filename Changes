@@ -1,5 +1,10 @@
 Revision history for Perl extension Tree::Simple.
 
+1.23  Sat Nov  9 10:43:00 2013
+	- No code changes.
+	- Accept spelling corrections from the Debian Perl Group, with thanx. See RT#90171.
+		Note: The change to lib/Tree/Simple/Visitor.pm had already been made.
+
 1.22  Mon Sep 30 08:35:00 2013
 	- Metadata fixes in Build.PL and correct bugtracker queue in Makefile.PL. Thanx to dsteinbrunner (via github).
 
@@ -148,7 +153,7 @@ Revision history for Perl extension Tree::Simple.
       both $child and an $index, and do the right thing
       based upon which one was given. This of course
       is how it works anyway since I maintained backwards
-      compatability. But take note, removeChildAt($index)
+      compatibility. But take note, removeChildAt($index)
       will not be supported. The method is still there,
       but it will very soon go away.
       I think this is a cleaner way to do this in the end.
@@ -158,9 +163,9 @@ Revision history for Perl extension Tree::Simple.
         - removeChild($index) is now removeChildAt($index)
           and removeChild($child) has replaced it. See the
           documentation for more info.
-        - backwards compatability maintained under change.
+        - backwards compatibility maintained under change.
         - new tests written to test the new code and to
-          test the backwards compatability
+          test the backwards compatibility
     - Test suite is not at 99% coverage (with 415 tests)
     - Moved object initialization code from Tree::Simple::Visitor::new
       to Tree::Simple::Visitor::_init. This keeps in line with the

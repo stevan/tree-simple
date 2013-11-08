@@ -799,7 +799,7 @@ cmp_ok($tree_to_remove2->getDepth(), '==', -1, '... the depth should be -1');
 cmp_ok($sub_tree_of_tree_to_remove2->getDepth(), '==', 0, '... the depth should be 0'); 	
 
 ## ----------------------------------------------------------------------------
-## test removeChild backwards compatability
+## test removeChild backwards compatibility
 ## ----------------------------------------------------------------------------	
 
 # make a node to remove

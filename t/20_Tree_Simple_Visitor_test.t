@@ -76,7 +76,7 @@ throws_ok {
 
 # -----------------------------------------------
 # test the old style interface for backwards
-# compatability
+# compatibility
 # -----------------------------------------------
 
 # and that our RECURSIVE constant is properly defined
