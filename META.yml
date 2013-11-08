@@ -17,10 +17,10 @@ name: Tree-Simple
 provides:
   Tree::Simple:
     file: lib/Tree/Simple.pm
-    version: 1.22
+    version: 1.23
   Tree::Simple::Visitor:
     file: lib/Tree/Simple/Visitor.pm
-    version: 1.22
+    version: 1.23
 requires:
   Scalar::Util: 1.18
   constant: 0
@@ -30,4 +30,4 @@ resources:
   bugtracker: https://github.com/stevan/tree-simple/issues
   license: https://www.gnu.org/licenses/license-list.html#PerlLicense
   repository: https://github.com/stevan/tree-simple
-version: 1.22
+version: 1.23
