@@ -5,6 +5,7 @@ author:
 build_requires:
   Test::Exception: 0.15
   Test::More: 0.47
+  Test::Version: 1.002003
 configure_requires:
   Module::Build: 0.4
 dynamic_config: 1

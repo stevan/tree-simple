@@ -30,6 +30,7 @@ my(%params) =
 		'strict'          => 0,
 		'Test::Exception' => '0.15',
 		'Test::More'      => '0.47',
+		'Test::Version'   => 1.002003,
 		'warnings'        => 0,
 	},
 	VERSION_FROM => 'lib/Tree/Simple.pm',

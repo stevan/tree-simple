@@ -12,8 +12,9 @@ Module::Build -> new
 	module_name    => 'Tree::Simple',
 	build_requires =>
 	{
-		'Test::More'      => '0.47',
 		'Test::Exception' => '0.15',
+		'Test::More'      => '0.47',
+		'Test::Version'   => 1.002003,
 	},
 	configure_requires =>
 	{
