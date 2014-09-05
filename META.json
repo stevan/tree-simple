@@ -4,7 +4,7 @@
       "Stevan Little <stevan@cpan.org>"
    ],
    "dynamic_config" : 1,
-   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.131560",
+   "generated_by" : "Module::Build version 0.421",
    "license" : [
       "perl_5"
    ],
@@ -17,8 +17,7 @@
       "build" : {
          "requires" : {
             "Test::Exception" : "0.15",
-            "Test::More" : "0.47",
-            "Test::Version" : "1.002003"
+            "Test::More" : "0.47"
          }
       },
       "configure" : {
@@ -38,11 +37,11 @@
    "provides" : {
       "Tree::Simple" : {
          "file" : "lib/Tree/Simple.pm",
-         "version" : "1.23"
+         "version" : "1.24"
       },
       "Tree::Simple::Visitor" : {
          "file" : "lib/Tree/Simple/Visitor.pm",
-         "version" : "1.23"
+         "version" : "1.24"
       }
    },
    "release_status" : "stable",
@@ -51,11 +50,12 @@
          "web" : "https://github.com/stevan/tree-simple/issues"
       },
       "license" : [
+         "http://dev.perl.org/licenses/",
          "https://www.gnu.org/licenses/license-list.html#PerlLicense"
       ],
       "repository" : {
          "url" : "https://github.com/stevan/tree-simple"
       }
    },
-   "version" : "1.23"
+   "version" : "1.24"
 }

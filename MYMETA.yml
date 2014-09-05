@@ -3,11 +3,12 @@ abstract: 'A simple tree object'
 author:
   - 'Stevan Little <stevan@cpan.org>'
 build_requires:
-  ExtUtils::MakeMaker: '0'
+  Test::Exception: '0.15'
+  Test::More: '0.47'
 configure_requires:
   Module::Build: '0.4'
 dynamic_config: 0
-generated_by: 'Module::Build version 0.4005, CPAN::Meta::Converter version 2.131560, CPAN::Meta::Converter version 2.142060'
+generated_by: 'Module::Build version 0.421, CPAN::Meta::Converter version 2.142060'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -22,8 +23,6 @@ provides:
     version: '1.23'
 requires:
   Scalar::Util: '1.18'
-  Test::Exception: '0.15'
-  Test::More: '0.47'
   constant: '0'
   strict: '0'
   warnings: '0'
