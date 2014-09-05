@@ -21,4 +21,3 @@ t/20_Tree_Simple_Visitor_test.t
 t/21_Tree_Simple_Visitor_test.t
 xt/author/pod.t
 xt/author/pod_coverage.t
-xt/author/version.t

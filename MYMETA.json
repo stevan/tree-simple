@@ -4,7 +4,7 @@
       "Stevan Little <stevan@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Module::Build version 0.4204",
+   "generated_by" : "Module::Build version 0.4207",
    "license" : [
       "perl_5"
    ],
@@ -17,8 +17,7 @@
       "build" : {
          "requires" : {
             "Test::Exception" : "0.15",
-            "Test::More" : "0.47",
-            "Test::Version" : "1.002003"
+            "Test::More" : "0.47"
          }
       },
       "configure" : {
