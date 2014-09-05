@@ -19,6 +19,6 @@ t/16_Tree_Simple_width_test.t
 t/17_Tree_Simple_width_test.t
 t/20_Tree_Simple_Visitor_test.t
 t/21_Tree_Simple_Visitor_test.t
-t/version.t
 xt/author/pod.t
 xt/author/pod_coverage.t
+xt/author/version.t
