@@ -37,11 +37,11 @@
    "provides" : {
       "Tree::Simple" : {
          "file" : "lib/Tree/Simple.pm",
-         "version" : "1.23"
+         "version" : "1.24"
       },
       "Tree::Simple::Visitor" : {
          "file" : "lib/Tree/Simple/Visitor.pm",
-         "version" : "1.23"
+         "version" : "1.24"
       }
    },
    "release_status" : "stable",
@@ -50,11 +50,12 @@
          "web" : "https://github.com/stevan/tree-simple/issues"
       },
       "license" : [
+         "http://dev.perl.org/licenses/",
          "https://www.gnu.org/licenses/license-list.html#PerlLicense"
       ],
       "repository" : {
          "url" : "https://github.com/stevan/tree-simple"
       }
    },
-   "version" : "1.23"
+   "version" : "1.24"
 }
