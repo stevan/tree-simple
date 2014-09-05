@@ -4,7 +4,7 @@
       "Stevan Little <stevan@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Module::Build version 0.4207",
+   "generated_by" : "Module::Build version 0.4005, CPAN::Meta::Converter version 2.131560, CPAN::Meta::Converter version 2.142060",
    "license" : [
       "perl_5"
    ],
@@ -16,8 +16,7 @@
    "prereqs" : {
       "build" : {
          "requires" : {
-            "Test::Exception" : "0.15",
-            "Test::More" : "0.47"
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "configure" : {
@@ -28,6 +27,8 @@
       "runtime" : {
          "requires" : {
             "Scalar::Util" : "1.18",
+            "Test::Exception" : "0.15",
+            "Test::More" : "0.47",
             "constant" : "0",
             "strict" : "0",
             "warnings" : "0"
