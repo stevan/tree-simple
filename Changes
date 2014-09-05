@@ -1,5 +1,10 @@
 Revision history for Perl extension Tree::Simple.
 
+1.24  Sat Sep  6 09:27:00 2014
+	- Abandon Test::Version and hence delete t/version.t. Putting version.t in xt/author/ is not a solution,
+		because Test::Version has problems with Test::EOL and Test::Builder.
+		Thanx to Kent Fredric for the github issue which started me investigating this issue.
+
 1.23  Sat Nov  9 10:43:00 2013
 	- No code changes.
 	- Accept spelling corrections from the Debian Perl Group, with thanx. See RT#90171.
