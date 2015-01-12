@@ -3,7 +3,7 @@ package Tree::Simple;
 use strict;
 use warnings;
 
-our $VERSION = '1.24';
+our $VERSION = '1.25';
 
 use Scalar::Util qw(blessed);
 
@@ -571,7 +571,7 @@ sub DESTROY {
     # ourselves, this will break most of the
     # connections and allow for things to get
     # reaped properly
-    unless (!$self->{_children} && scalar(@{$self->{_children}}) == 0) {
+    if ($self->{_children}) {
         foreach my $child (@{$self->{_children}}) {
             defined $child && $child->_detachParent();
         }
