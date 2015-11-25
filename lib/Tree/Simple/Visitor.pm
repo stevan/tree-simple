@@ -187,7 +187,7 @@ But is better expressed as this:
   $tree->accept($visitor);
   print join ", ", $visitor->getResults();  # prints "1.0, 2.0, 2.1.0, 3.0"
 
-This object is still pretty much a wrapper around the Tree::Simple C<traverse> method, and can be thought of as a depth-first traversal Visitor object.
+This object is still pretty much a wrapper around the L<Tree::Simple> C<traverse> method, and can be thought of as a depth-first traversal Visitor object.
 
 =head1 METHODS
 
@@ -199,7 +199,7 @@ The new style interface means that all arguments to the constructor are now opti
 
 The old style constructor documentation is retained her for reference:
 
-The first argument to the constructor is a code reference to a function which expects a B<Tree::Simple> object as its only argument. The second argument is optional, it can be used to set the depth to which the function is applied. If no depth is set, the function is applied to the current B<Tree::Simple> instance. If C<$depth> is set to C<CHILDREN_ONLY>, then the function will be applied to the current B<Tree::Simple> instance and all its immediate children. If C<$depth> is set to C<RECURSIVE>, then the function will be applied to the current B<Tree::Simple> instance and all its immediate children, and all of their children recursively on down the tree. If no C<$depth> is passed to the constructor, then the function will only be applied to the current B<Tree::Simple> object and none of its children.
+The first argument to the constructor is a code reference to a function which expects a B<Tree::Simple> object as its only argument. The second argument is optional, it can be used to set the depth to which the function is applied. If no depth is set, the function is applied to the current L<Tree::Simple> instance. If C<$depth> is set to C<CHILDREN_ONLY>, then the function will be applied to the current L<Tree::Simple> instance and all its immediate children. If C<$depth> is set to C<RECURSIVE>, then the function will be applied to the current L<Tree::Simple> instance and all its immediate children, and all of their children recursively on down the tree. If no C<$depth> is passed to the constructor, then the function will only be applied to the current L<Tree::Simple> object and none of its children.
 
 =item B<includeTrunk ($boolean)>
 
@@ -215,7 +215,7 @@ This method clears node filter field.
 
 =item B<setNodeFilter ($filter_function)>
 
-This method accepts a CODE reference as its C<$filter_function> argument. This code reference is used to filter the tree nodes as they are collected. This can be used to customize output, or to gather specific information from a more complex tree node. The filter function should accept a single argument, which is the current Tree::Simple object.
+This method accepts a CODE reference as its C<$filter_function> argument. This code reference is used to filter the tree nodes as they are collected. This can be used to customize output, or to gather specific information from a more complex tree node. The filter function should accept a single argument, which is the current L<Tree::Simple> object.
 
 =item B<getResults>
 
@@ -227,7 +227,7 @@ This method should not really be used outside of this class, as it just would no
 
 =item B<visit ($tree)>
 
-The C<visit> method accepts a B<Tree::Simple> and applies the function set in C<new> or C<setNodeFilter> appropriately. The results of this application can be retrieved with C<getResults>
+The C<visit> method accepts a L<Tree::Simple> and applies the function set in C<new> or C<setNodeFilter> appropriately. The results of this application can be retrieved with C<getResults>
 
 =back
 
@@ -239,21 +239,21 @@ These constants are part of the old-style interface, and therefore will eventual
 
 =item B<RECURSIVE>
 
-If passed this constant in the constructor, the function will be applied recursively down the hierarchy of B<Tree::Simple> objects.
+If passed this constant in the constructor, the function will be applied recursively down the hierarchy of L<Tree::Simple> objects.
 
 =item B<CHILDREN_ONLY>
 
-If passed this constant in the constructor, the function will be applied to the immediate children of the B<Tree::Simple> object.
+If passed this constant in the constructor, the function will be applied to the immediate children of the L<Tree::Simple> object.
 
 =back
 
 =head1 BUGS
 
-None that I am aware of. The code is pretty thoroughly tested (see B<CODE COVERAGE> section in B<Tree::Simple>) and is based on an (non-publicly released) module which I had used in production systems for about 2 years without incident. Of course, if you find a bug, let me know, and I will be sure to fix it.
+None that I am aware of. The code is pretty thoroughly tested (see B<CODE COVERAGE> section in L<Tree::Simple>) and is based on an (non-publicly released) module which I had used in production systems for about 2 years without incident. Of course, if you find a bug, let me know, and I will be sure to fix it.
 
 =head1 SEE ALSO
 
-I have written a set of pre-built Visitor objects, available on CPAN as B<Tree::Simple::VisitorFactory>.
+I have written a set of pre-built Visitor objects, available on CPAN as L<Tree::Simple::VisitorFactory>.
 
 =head1 AUTHOR
 
