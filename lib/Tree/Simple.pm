@@ -146,7 +146,8 @@ sub _insertChildAt {
     # against the index given
     my $max = $self->getChildCount();
     ($index <= $max)
-        || die "Index Out of Bounds : got ($index) expected no more than (" . $self->getChildCount() . ")";
+        || die "Index Out of Bounds : got ($index) expected no more than ("
+        . $self->getChildCount() . ")";
 
     (@trees)
         || die "Insufficient Arguments : no tree(s) to insert";
@@ -198,7 +199,8 @@ sub removeChildAt {
     # check the bounds of our children
     # against the index given
     ($index < $self->getChildCount())
-        || die "Index Out of Bounds : got ($index) expected no more than (" . $self->getChildCount() . ")";
+        || die "Index Out of Bounds : got ($index) expected no more than ("
+        . $self->getChildCount() . ")";
     my $removed_child;
     # if index is zero, use this optimization
     if ($index == 0) {

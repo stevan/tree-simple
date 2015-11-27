@@ -2,6 +2,7 @@
 ,v$
 \B\.cvsignore$
 \B\.git\b
+\B\.gitignore\b
 \B\.svn\b
 \bCVS\b
 \bRCS\b
@@ -12,7 +13,6 @@
 \bpm_to_blib$
 \bMakefile$
 \bMakeMaker-\d
-^MANIFEST\.SKIP$
 
 # Avoid Module::Build generated and utility files.
 \b_build
