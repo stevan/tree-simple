@@ -208,7 +208,7 @@ the C<$depth> is always assumed to be equivalent to C<RECURSIVE> and the C<$func
 can be set with C<setNodeFilter> instead. This is the recommended way of doing things now.
 If you have been using the old way, it is still there, and I will maintain backwards
 compatibility for a few more version before removing it entirely. If you are using this
-module (and I don't even know if anyone actually is) you have been warned. Please contact
+module (and I do not even know if anyone actually is) you have been warned. Please contact
 me if this will be a problem.
 
 The old style constructor documentation is retained her for reference:
