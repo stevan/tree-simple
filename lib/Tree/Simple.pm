@@ -659,7 +659,7 @@ been in use on a few production systems for approx. 2 years now with no issue.
 The only difference is that the code has been cleaned up a bit, comments added and
 the thorough tests written for its public release. I am confident it behaves as
 I would expect it to, and is (as far as I know) bug-free. I have not stress-tested
-it under extreme duress, but I don't so much intend for it to be used in that
+it under extreme duress, but I do not so much intend for it to be used in that
 type of situation. If this module cannot keep up with your Tree needs, i suggest
 switching to one of the modules listed in the L<OTHER TREE MODULES> section below.
 
@@ -686,7 +686,7 @@ The constructor accepts two arguments a C<$node> value and an optional C<$parent
 The C<$node> value can be any scalar value (which includes references and objects).
 The optional C<$parent> value must be a B<Tree::Simple> object, or an object
 derived from B<Tree::Simple>. Setting this value implies that your new tree is a
-child of the parent tree, and therefore adds it to the parent's children. If the
+child of the parent tree, and therefore adds it to the children of that parent. If the
 C<$parent> is not specified then its value defaults to ROOT.
 
 =back
@@ -703,9 +703,9 @@ C<$node_value> is not defined.
 =item B<setUID ($uid)>
 
 This allows you to set your own unique ID for this specific Tree::Simple object.
-A default value derived from the object's hex address is provided for you, so use
+A default value derived from the hex address of the object is provided for you, so use
 of this method is entirely optional. It is the responsibility of the user to
-ensure the value's uniqueness, all that is tested by this method is that C<$uid>
+ensure the value has uniqueness, all that is tested by this method is that C<$uid>
 is a true value (evaluates to true in a boolean context). For even more information
 about the Tree::Simple UID see the C<getUID> method.
 
@@ -713,7 +713,7 @@ about the Tree::Simple UID see the C<getUID> method.
 
 This method accepts only B<Tree::Simple> objects or objects derived from
 B<Tree::Simple>, an exception is thrown otherwise. This method will append
-the given C<$tree> to the end of it's children list, and set up the correct
+the given C<$tree> to the end of the children list, and set up the correct
 parent-child relationships. This method is set up to return its invocant so
 that method call chaining can be possible. Such as:
 
@@ -730,7 +730,7 @@ Or the more complex:
 =item B<addChildren (@trees)>
 
 This method accepts an array of B<Tree::Simple> objects, and adds them to
-it's children list. Like C<addChild> this method will return its invocant
+the children list. Like C<addChild> this method will return its invocant
 to allow for method call chaining.
 
 =item B<insertChild ($index, $tree)>
@@ -739,7 +739,7 @@ This method accepts a numeric C<$index> and a B<Tree::Simple> object (C<$tree>),
 and inserts the C<$tree> into the children list at the specified C<$index>.
 This results in the shifting down of all children after the C<$index>. The
 C<$index> is checked to be sure it is the bounds of the child list, if it
-out of bounds an exception is thrown. The C<$tree> argument's type is
+out of bounds an exception is thrown. The C<$tree> argument is
 verified to be a B<Tree::Simple> or B<Tree::Simple> derived object, if
 this condition fails, an exception is thrown.
 
@@ -759,14 +759,14 @@ no match is found, and exception is thrown. If a non-B<Tree::Simple> object
 is given as the C<$child> argument, an exception is thrown.
 
 This method also accepts a numeric C<$index> and removes the child found at
-that index from it's list of children. The C<$index> is bounds checked, if
+that index within the list of children. The C<$index> is bounds checked, if
 this condition fail, an exception is thrown.
 
 When a child is removed, it results in the shifting up of all children after
 it, and the removed child is returned. The removed child is properly
 disconnected from the tree and all its references to its old parent are
 removed. However, in order to properly clean up and circular references
-the removed child might have, it is advised to call it's C<DESTROY> method.
+the removed child might have, it is advised to call the C<DESTROY> method.
 See the L<CIRCULAR REFERENCES> section for more information.
 
 =item B<addSibling ($tree)>
@@ -797,7 +797,7 @@ The same effect can be achieved by manual upwards traversal.
 
 =item B<getNodeValue>
 
-This returns the value stored in the object's node field.
+This returns the value stored in the node field of the object.
 
 =item B<getUID>
 
@@ -824,21 +824,21 @@ It will return an array reference in scalar context.
 =item B<getAllSiblings>
 
 Much like C<addSibling> and C<addSiblings>, these two methods simply call
-C<getChild> and C<getAllChildren> on the invocant's parent.
+C<getChild> and C<getAllChildren> on the parent of the invocant.
 
 =item B<getDepth>
 
-Returns a number representing the invocant's depth within the hierarchy of
+Returns a number representing the depth of the invocant within the hierarchy of
 B<Tree::Simple> objects.
 
 B<NOTE:> A C<ROOT> tree has the depth of -1. This be because Tree::Simple
-assumes that a tree's root will usually not contain data, but just be an
+assumes that a root node will usually not contain data, but just be an
 anchor for the data-containing branches. This may not be intuitive in all
 cases, so I mention it here.
 
 =item B<getParent>
 
-Returns the invocant's parent, which could be either B<ROOT> or a
+Returns the parent of the invocant, which could be either B<ROOT> or a
 B<Tree::Simple> object.
 
 =item B<getHeight>
@@ -857,7 +857,7 @@ Returns the number of children the invocant contains.
 
 =item B<getIndex>
 
-Returns the index of this tree within its parent's child list. Returns -1 if
+Returns the index of this tree within its sibling list. Returns -1 if
 the tree is the root.
 
 =back
@@ -872,7 +872,7 @@ Returns true (1) if the invocant does not have any children, false (0) otherwise
 
 =item B<isRoot>
 
-Returns true (1) if the invocant's "parent" field is B<ROOT>, returns false
+Returns true (1) if the invocant has a "parent" of B<ROOT>, returns false
 (0) otherwise.
 
 =back
@@ -888,7 +888,7 @@ C<$postfunc>. If the argument C<$func> is not defined then an exception
 is thrown. If C<$func> or C<$postfunc> are not in fact CODE references
 then an exception is thrown. The function C<$func> is then applied
 recursively to all the children of the invocant. If given, the function
-C<$postfunc> will be applied to each child after the child's children
+C<$postfunc> will be applied to each child after the children of the child
 have been traversed.
 
 Here is an example of a traversal function that will print out the
@@ -937,7 +937,7 @@ more efficient and usable.
 It accepts either a B<Tree::Simple::Visitor> object (which includes classes derived
     from B<Tree::Simple::Visitor>), or an object who has the C<visit> method available
     (tested with C<$visitor-E<gt>can('visit')>). If these qualifications are not met,
-    and exception will be thrown. We then run the Visitor's C<visit> method giving the
+    and exception will be thrown. We then run the Visitor C<visit> method giving the
     current tree as its argument.
 
 I have also created a number of Visitor objects and packaged them into the
@@ -1001,24 +1001,24 @@ section on L<CIRCULAR REFERENCES> for more information.
 
 =item B<fixDepth>
 
-Tree::Simple will manage your tree's depth field for you using this method. You
+Tree::Simple will manage the depth field for you using this method. You
 should never need to call it on your own, however if you ever did need to, here
-is it. Running this method will traverse your all the invocant's sub-trees
+is it. Running this method will traverse your all the sub-trees of the invocant,
 correcting the depth as it goes.
 
 =item B<fixHeight>
 
-Tree::Simple will manage your tree's height field for you using this method.
+Tree::Simple will manage the height field for you using this method.
 You should never need to call it on your own, however if you ever did need to,
 here is it. Running this method will correct the heights of the current tree
-and all it's ancestors.
+and all ancestors heights too.
 
 =item B<fixWidth>
 
-Tree::Simple will manage your tree's width field for you using this method. You
+Tree::Simple will manage the width field for you using this method. You
 should never need to call it on your own, however if you ever did need to,
 here is it. Running this method will correct the widths of the current tree
-and all it's ancestors.
+and all ancestors widths too.
 
 =back
 
@@ -1032,7 +1032,7 @@ Tree::Simple, here they are.
 =item B<_init ($node, $parent, $children)>
 
 This method is here largely to facilitate subclassing. This method is called by
-new to initialize the object, where new's primary responsibility is creating
+new to initialize the object, where new has the primary responsibility of creating
 the instance.
 
 =item B<_setParent ($parent)>
@@ -1057,8 +1057,8 @@ I feel is a more consistent and sane way.
 Circular references are now managed with the simple idea that the parent makes
 the decisions for the child. This means that child-to-parent references are
 weak, while parent-to-child references are strong. So if a parent is destroyed
-it will force all it's children to detach from it, however, if a child is
-destroyed it will not be detached from it's parent.
+it will force all the children to detach from it, however, if a child is
+destroyed it will not be detached from the parent.
 
 =head2 Optional Weak References
 
@@ -1071,7 +1071,7 @@ setting like this:
   use Tree::Simple 'use_weak_refs';
 
 And from that point on Tree::Simple will use weak references to allow for
-perl's reference counting to clean things up properly.
+ reference counting to clean things up properly.
 
 For those who are unfamiliar with weak references, and how they affect the
 reference counts, here is a simple illustration. First is the normal model
@@ -1128,7 +1128,7 @@ to fix it.
 =head1 CODE COVERAGE
 
 I use L<Devel::Cover> to test the code coverage of my tests, below
-is the L<Devel::Cover> report on this module's test suite.
+is the L<Devel::Cover> report on the test suite.
 
  ---------------------------- ------ ------ ------ ------ ------ ------ ------
  File                           stmt branch   cond    sub    pod   time  total
@@ -1146,13 +1146,13 @@ module, they are describes below and available on CPAN.
 
 =over 4
 
-=item L<Tree::Parser> - A module for parsing formatted files into Tree::Simple hierarchies.
+=item L<Tree::Parser> - A module for parsing formatted files into Tree::Simple hierarchies
 
-=item L<Tree::Simple::View> - A set of classes for viewing Tree::Simple hierarchies in various output formats.
+=item L<Tree::Simple::View> - For viewing Tree::Simple hierarchies in various output formats
 
-=item L<Tree::Simple::VisitorFactory> - A set of several useful Visitor objects for Tree::Simple objects.
+=item L<Tree::Simple::VisitorFactory> - Useful Visitor objects for Tree::Simple objects
 
-=item L<Tree::Binary> - If you are looking for a binary tree, this you might want to check this one out.
+=item L<Tree::Binary> - If you are looking for a binary tree, check this one out
 
 =back
 
@@ -1192,7 +1192,7 @@ specialized in purpose.
 =item L<Tree::DAG_Node>
 
 This module seems pretty stable and very robust with a lot of functionality.
-However, B<Tree::DAG_Node> does not come with any automated tests. It's
+However, B<Tree::DAG_Node> does not come with any automated tests.
 I<test.pl> file simply checks the module loads and nothing else. While I
 am sure the author tested his code, I would feel better if I was able to
 see that. The module is approx. 3000 lines with POD, and 1,500 without the
@@ -1226,7 +1226,7 @@ that there is currently no way to remove a child node.
 
 It is a (somewhat) direct translation of the N-ary tree from the GLIB
 library, and the API is based on that. GLIB is a C library, which means
-this is a very C-ish API. That doesn't appeal to me, it might to you, to
+this is a very C-ish API. That does not appeal to me, it might to you, to
 each their own.
 
 This module is similar in intent to B<Tree::Simple>. It implements a tree
@@ -1272,7 +1272,7 @@ Is a wrapper around a C library, again B<Tree::Simple> is pure-perl. The author
 describes FAT-trees as a combination of a Tree and an array. It looks like a
 pretty mean and lean module, and good if you need speed and are implementing a
 custom data-store of some kind. The author points out too that the module is
-designed for embedding and there is not default embedding, so you can't really
+designed for embedding and there is not default embedding, so you cannot really
 use it "out of the box".
 
 =back
