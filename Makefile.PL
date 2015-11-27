@@ -15,7 +15,7 @@ my(%params) =
 	) : (),
 	clean =>
 	{
-		FILES => 'blib/* Makefile MANIFEST Tree-Simple-*'
+		FILES => 'blib/* Makefile Tree-Simple-*'
 	},
 	dist =>
 	{

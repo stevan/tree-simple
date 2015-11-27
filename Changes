@@ -1,229 +1,229 @@
 Revision history for Perl extension Tree::Simple.
 
-1.25  Tue Jan 13 08:51:00 2014
-	- Fix logic in sub DESTROY for when children are/are not present. Reported by astortz.
-		See https://github.com/stevan/tree-simple/issues/8.
+1.25   2014-01-13 08:51:00
+       - Fix logic in sub DESTROY for when children are/are not present. Reported by astortz.
+ 	 See https://github.com/stevan/tree-simple/issues/8.
 
-1.24  Sat Sep  6 09:27:00 2014
-	- Abandon Test::Version and hence delete t/version.t. Putting version.t in xt/author/ is not a solution,
-		because Test::Version has problems with Test::EOL and Test::Builder.
-		Thanx to Kent Fredric for the github issue which started me investigating this issue.
+1.24   2014-09-06 09:27:00
+       - Abandon Test::Version and hence delete t/version.t. Putting version.t in xt/author/ is not a solution,
+  	 because Test::Version has problems with Test::EOL and Test::Builder.
+	 Thanx to Kent Fredric for the github issue which started me investigating this issue.
 
-1.23  Sat Nov  9 10:43:00 2013
-	- No code changes.
-	- Accept spelling corrections from the Debian Perl Group, with thanx. See RT#90171.
-		Note: The change to lib/Tree/Simple/Visitor.pm had already been made.
-	- Add t/version.t, which uses Test::Version, to cross-check version #s.
+1.23   2013-11-09 10:43:00
+       - No code changes.
+       - Accept spelling corrections from the Debian Perl Group, with thanx. See RT#90171.
+  	 Note: The change to lib/Tree/Simple/Visitor.pm had already been made.
+       - Add t/version.t, which uses Test::Version, to cross-check version #s.
 
-1.22  Mon Sep 30 08:35:00 2013
-	- Metadata fixes in Build.PL and correct bugtracker queue in Makefile.PL. Thanx to dsteinbrunner (via github).
+1.22   2013-09-30 08:35:00
+       - Metadata fixes in Build.PL and correct bugtracker queue in Makefile.PL. Thanx to dsteinbrunner (via github).
 
-1.21  Thu Sep 26 13:08:00 2013
-	- Fix syntax error in Makefile.PL.
+1.21   2013-09-26 13:08:00
+       - Fix syntax error in Makefile.PL.
 
-1.20  Thu Sep 26 11:16:00 2013
-	- Merge source from https://github.com/stevan/tree-simple.
-	- Close github issues.
-	- Add bugtracker and license to Build.PL and Makefile.PL.
+1.20   2013-09-26 11:16:00
+       - Merge source from https://github.com/stevan/tree-simple.
+       - Close github issues.
+       - Add bugtracker and license to Build.PL and Makefile.PL.
 
-1.19  Mon Sep 23 08:26:00 2013
-	- Maintenance now by Ron Savage.
-	- Rectify datestamp format in this file.
-	- Add Changelog.ini.
-	- Make Simple.pm and Visitor.pm have the same version #.
-	- Reformat Build.PL and Makefile.PL.
-	- Move t/pod* into xt/author/.
-	- Minor doc patches.
-	- Add t/17_Tree_Simple_width_test.t. This code was attached to RT#40407, to demonstrate a bug in keeping a
-		running total of the width (leaf count) of a tree during node additions to leaves.
-		Thanx to David Cryer for the test code and patch.
-	- Add t/21_Tree_Simple_Visitor_test.t. This code was attached to RT#30032, to demonstrate a bug in including
-		the root in a traversal after calling $visitor -> includeTruck(1).
-	- RT#30032: Adopt patch from Moses Amaro. With thanx.
-	- RT#38607: Reject. Suppressing deep recursion warnings should not normally be done. Sub-class!
-	- RT#40407: Adopt patch from David Cryer. With thanx.
-	- RT#84797: Reject. Changing the return value of setUID could break any amount of code.
+1.19   2013-09-23 08:26:00
+       - Maintenance now by Ron Savage.
+       - Rectify datestamp format in this file.
+       - Add Changelog.ini.
+       - Make Simple.pm and Visitor.pm have the same version #.
+       - Reformat Build.PL and Makefile.PL.
+       - Move t/pod* into xt/author/.
+       - Minor doc patches.
+       - Add t/17_Tree_Simple_width_test.t. This code was attached to RT#40407, to demonstrate a bug in keeping a
+  	 running total of the width (leaf count) of a tree during node additions to leaves.
+	 Thanx to David Cryer for the test code and patch.
+       - Add t/21_Tree_Simple_Visitor_test.t. This code was attached to RT#30032, to demonstrate a bug in including
+  	 the root in a traversal after calling $visitor -> includeTruck(1).
+       - RT#30032: Adopt patch from Moses Amaro. With thanx.
+       - RT#38607: Reject. Suppressing deep recursion warnings should not normally be done. Sub-class!
+       - RT#40407: Adopt patch from David Cryer. With thanx.
+       - RT#84797: Reject. Changing the return value of setUID could break any amount of code.
 
-1.18  Sun Nov 11 12:00:00 2007
-    - fixing version string to not choke on 5.10
-      (RT #29746)
+1.18   2007-11-11 12:00:00
+       - fixing version string to not choke on 5.10
+         (RT #29746)
 
-1.17  Mon Oct 23 12:00:00 2006
-    - make loading of Scalar::Util::weaken, completely
-      optional
-    - added a $post_func optional arg to &traverse. Thanks
-      to Mark Lawrence for the patch, docs and tests :)
+1.17   2006-10-23 12:00:00
+       - make loading of Scalar::Util::weaken, completely
+         optional
+       - added a $post_func optional arg to &traverse. Thanks
+         to Mark Lawrence for the patch, docs and tests :)
 
-1.16  Mon Feb  6 12:00:00 2006
-    - converted to use Module::Build (Rob Kinyon)
-    - refactored &addChild and &addChildren to be
-      implemented in terms of &insertChild and
-      &insertChildren (Rob Kinyon)
-    - other misc. refactorings (Rob Kinyon)
-    - updated Scalar::Util version dependency (Stevan Little)
-    - updated copyrights for the new year (Stevan Little)
+1.16   2006-02-06 12:00:00
+       - converted to use Module::Build (Rob Kinyon)
+       - refactored &addChild and &addChildren to be
+         implemented in terms of &insertChild and
+         &insertChildren (Rob Kinyon)
+       - other misc. refactorings (Rob Kinyon)
+       - updated Scalar::Util version dependency (Stevan Little)
+       - updated copyrights for the new year (Stevan Little)
 
-1.15  Thu May 26 12:00:00 2005
-    - added optional use of weakened parent references
-      and improved the old circular reference DESTROY
-      model to make more sense. See the documantation
-      for more info.
-    - fixed bug in the fixDepth() function
+1.15   2005-05-26 12:00:00
+       - added optional use of weakened parent references
+         and improved the old circular reference DESTROY
+         model to make more sense. See the documantation
+         for more info.
+       - fixed bug in the fixDepth() function
 
-1.14  Thu Nov 18 12:00:00 2004
-    - now using Scalar::Util::blessed() instead of
-      the convoluted UNIVERSAL::isa() stuff.
-      - added Scalar::Util as a dependency
+1.14   2004-11-18 12:00:00
+       - now using Scalar::Util::blessed() instead of
+         the convoluted UNIVERSAL::isa() stuff.
+       - added Scalar::Util as a dependency
 
-1.13  Mon Nov 15 12:00:00 2004
-    - added width functionality (with getWidth),
-      thanks to Mark Thomas for his insight/suggestions
-        - added tests for this
-        - added documentation for this
-    - improved the height functionality, thanks again
-      to Mark Thomas for his insight/suggestions
-        - deprecated the 'height' method in favor
-          of the more consistent 'getHeight' method
-        - added tests for this
-        - added documentation for this
-    - added some info in the docs to explain the depth
-      value for ROOT trees.
-    - cleaned up and improved the following test files
-      	> 11_Tree_Simple_fixDepth_test.t
-        > 13_Tree_Simple_clone_test.t
+1.13   2004-11-15 12:00:00
+       - added width functionality (with getWidth),
+         thanks to Mark Thomas for his insight/suggestions
+       - added tests for this
+       - added documentation for this
+       - improved the height functionality, thanks again
+         to Mark Thomas for his insight/suggestions
+       - deprecated the 'height' method in favor
+         of the more consistent 'getHeight' method
+       - added tests for this
+       - added documentation for this
+       - added some info in the docs to explain the depth
+         value for ROOT trees.
+       - cleaned up and improved the following test files
+         > 11_Tree_Simple_fixDepth_test.t
+         > 13_Tree_Simple_clone_test.t
 
-1.12  Thu Oct  7 12:00:00 2004
-    - fixed the clone method, it was not correctly
-      cloning parental relationships
-        - added tests and docs for this
-    - improved clone and cloneShallow with the addition
-      of the _cloneNode utility function, we now deep
-      clone the nodes
-        - added test and docs for this
+1.12   2004-10-07 12:00:00
+       - fixed the clone method, it was not correctly
+         cloning parental relationships
+       - added tests and docs for this
+       - improved clone and cloneShallow with the addition
+         of the _cloneNode utility function, we now deep
+         clone the nodes
+       - added test and docs for this
 
-1.11  Mon Oct  4 12:00:00 2004
-    - some documentation changes, no code changes
+1.11   2004-10-04 12:00:00
+       - some documentation changes, no code changes
 
-1.10  Tue Aug 31 12:00:00 2004
-    - streamlined the DESTROY method to avoid method
-      calls as this can sometimes cause issues during
-      global destruction with subclasses.
+1.10   2004-08-31 12:00:00
+       - streamlined the DESTROY method to avoid method
+         calls as this can sometimes cause issues during
+         global destruction with subclasses.
 
-1.09  Tue Aug 31 12:00:00 2004
-    - Fixed DESTROY to avoid memory leaks (RT-BUG: #7512)
-        - added documentation to explain when to call
-          the DESTROY method to properly clean up any
-          circular references
-        - added test (14_Tree_Simple_leak_test.t) to
-          verify this fix (needs Test::Memory::Cycle to run)
+1.09   2004-08-31 12:00:00
+       - Fixed DESTROY to avoid memory leaks (RT-BUG: #7512)
+       - added documentation to explain when to call
+         the DESTROY method to properly clean up any
+         circular references
+       - added test (14_Tree_Simple_leak_test.t) to
+         verify this fix (needs Test::Memory::Cycle to run)
 
-1.08  Wed Aug 25 12:00:00 2004
-    - added the 'height' and 'size' methods
-        - added tests for these
-        - added documentation for these
+1.08   2004-08-25 12:00:00
+       - added the 'height' and 'size' methods
+       - added tests for these
+       - added documentation for these
 
-1.07  Wed Jul 28 12:00:00 2004
-    - Added the getUID and setUID methods to Tree::Simple, thanks
-      to Brett Nuske for that suggestion.
-      - added documentation for these methods
-      - added tests for those methods
-    - added t/pod.t and t/pod_coverage.t to the test suite
+1.07   2004-07-28 12:00:00
+       - Added the getUID and setUID methods to Tree::Simple, thanks
+         to Brett Nuske for that suggestion.
+       - added documentation for these methods
+       - added tests for those methods
+       - added t/pod.t and t/pod_coverage.t to the test suite
 
-1.06  Mon Jul  6 12:00:00 2004
-    - Changed what the Tree::Simple accept method accepts
-        - added tests for this
-    - Completely Revised the Tree::Simple::Visitor object
-      so that it is a better base class. This coincides with
-      the release of the Tree::Simple::VisitorFactory collection
-      of Visitor objects.
-        - added tests for this
+1.06   2004-07-06 12:00:00
+       - Changed what the Tree::Simple accept method accepts
+       - added tests for this
+       - Completely Revised the Tree::Simple::Visitor object
+         so that it is a better base class. This coincides with
+         the release of the Tree::Simple::VisitorFactory collection
+         of Visitor objects.
+       - added tests for this
 
-1.05  Sun Jun  6 12:00:00 2004
-    - Fixed some vagueness in the documentation as well
-      as made sure that the ROOT constant could be given
-      as a the $parent argument.
+1.05   2004-06-06 12:00:00
+       - Fixed some vagueness in the documentation as well
+         as made sure that the ROOT constant could be given
+         as a the $parent argument.
 
-1.04  Tue May 18 12:00:00 2004
-    - The second argument to the Tree::Simple constructor
-      was a parent, and that argument was not getting
-      properly type checked before attempting to call
-      'addChild' on it. Now it is properly type checked
-      and will throw an exception if it is not correct.
+1.04   2004-05-18 12:00:00
+       - The second argument to the Tree::Simple constructor
+         was a parent, and that argument was not getting
+         properly type checked before attempting to call
+         'addChild' on it. Now it is properly type checked
+         and will throw an exception if it is not correct.
 
-1.03  Sun May  9 12:00:00 2004
-    - I have added a new method 'getIndex', which will
-      fetch the index of the current tree within it's
-      parent's child list. I have also added documentation
-      and tests for this.
+1.03   2004-05-09 12:00:00
+       - I have added a new method 'getIndex', which will
+         fetch the index of the current tree within it's
+         parent's child list. I have also added documentation
+         and tests for this.
 
-1.02  Sun May  2 12:00:00 2004
-    - I thought about the API change, and I decided that
-      the new method (removeChildAt($index)) did not make
-      sense. It made more sense for removeChild to accept
-      both $child and an $index, and do the right thing
-      based upon which one was given. This of course
-      is how it works anyway since I maintained backwards
-      compatibility. But take note, removeChildAt($index)
-      will not be supported. The method is still there,
-      but it will very soon go away.
-      I think this is a cleaner way to do this in the end.
+1.02   2004-05-02 12:00:00
+       - I thought about the API change, and I decided that
+         the new method (removeChildAt($index)) did not make
+         sense. It made more sense for removeChild to accept
+         both $child and an $index, and do the right thing
+         based upon which one was given. This of course
+         is how it works anyway since I maintained backwards
+         compatibility. But take note, removeChildAt($index)
+         will not be supported. The method is still there,
+         but it will very soon go away.
+         I think this is a cleaner way to do this in the end.
 
-1.01  Wed Apr 28 12:00:00 2004
-    - Made API change:
-        - removeChild($index) is now removeChildAt($index)
-          and removeChild($child) has replaced it. See the
-          documentation for more info.
-        - backwards compatibility maintained under change.
-        - new tests written to test the new code and to
-          test the backwards compatibility
-    - Test suite is not at 99% coverage (with 415 tests)
-    - Moved object initialization code from Tree::Simple::Visitor::new
-      to Tree::Simple::Visitor::_init. This keeps in line with the
-      Tree::Simple code and the seperation of object creation and
-      initialization.
+1.01   2004-04-28 12:00:00
+       - Made API change:
+       - removeChild($index) is now removeChildAt($index)
+         and removeChild($child) has replaced it. See the
+         documentation for more info.
+       - backwards compatibility maintained under change.
+       - new tests written to test the new code and to
+         test the backwards compatibility
+       - Test suite is not at 99% coverage (with 415 tests)
+       - Moved object initialization code from Tree::Simple::Visitor::new
+         to Tree::Simple::Visitor::_init. This keeps in line with the
+         Tree::Simple code and the seperation of object creation and
+         initialization.
 
-1.00  Mon Apr  5 12:00:00 2004
-    - I dont know why, but I was wary of calling this 1.0
-	  but that is really what it is. I think too many modules
-	  avoid that number, but I am not gonna do that. So here
-	  goes, its 1.0 baby!!
-	- Note: Being new to this versioning thing, I was actually going
-		for a "minor" version thing with the jump from 0.3 to 0.14. I
-		realized that was not only dumb, but incorrect. But in realizing
-		this, I decided this is really 1.0 code anyway and took the plunge.
+1.00   2004-04-05 12:00:00
+       - I dont know why, but I was wary of calling this 1.0
+         but that is really what it is. I think too many modules
+	 avoid that number, but I am not gonna do that. So here
+	 goes, its 1.0 baby!!
+       - Note: Being new to this versioning thing, I was actually going
+ 	 for a "minor" version thing with the jump from 0.3 to 0.14. I
+	 realized that was not only dumb, but incorrect. But in realizing
+	 this, I decided this is really 1.0 code anyway and took the plunge.
 
-0.15  Mon Apr  5 12:00:00 2004
-    - Made a few adjustments:
-	  - changed to UNIVERSAL::isa($object, "Class") so as to
-	    avoid warnings if non-object refs are passed
-	- added more tests to the Tree::Simple::Visitor object
-	- added more tests to check for non-object-refs passed
-	  where they shouldnt be.
+0.15   2004-04-05 12:00:00
+       - Made a few adjustments:
+       - changed to UNIVERSAL::isa($object, "Class") so as to
+         avoid warnings if non-object refs are passed
+       - added more tests to the Tree::Simple::Visitor object
+       - added more tests to check for non-object-refs passed
+         where they shouldnt be.
 
-0.14  Sun Apr  4 12:00:00 2004
-    - I feel this module is ready for serious use. I have been
-	  using it in production environments for almost 2 years now,
-	  and I have recently beefed up the test suite as well. It now
-	  has 371 tests with approx. 95% code coverage. I feel the code
-	  is solid as is the API (although some people dont like my
-	  Java-esque naming style, but hey whatta ya do). Most of this
-	  release is just tweaking and fine tuning of code, and updating
-	  of the documentation.
+0.14   2004-04-04 12:00:00
+       - I feel this module is ready for serious use. I have been
+         using it in production environments for almost 2 years now,
+         and I have recently beefed up the test suite as well. It now
+         has 371 tests with approx. 95% code coverage. I feel the code
+         is solid as is the API (although some people dont like my
+         Java-esque naming style, but hey whatta ya do). Most of this
+         release is just tweaking and fine tuning of code, and updating
+         of the documentation.
 
-0.03  Thu Apr  1 12:00:00 2004
-	- Like an idiot I forgot to change the version number
-	  from version 0.01 to 0.02 and because of CPAN's security-type
-	  restriction about uploading files with a duplicate name
-	  I have to up the version number.
+0.03   2004-04-01 12:00:00
+       - Like an idiot I forgot to change the version number
+         from version 0.01 to 0.02 and because of CPAN's security-type
+         restriction about uploading files with a duplicate name
+         I have to up the version number.
 
-0.02  Thu Apr  1 12:00:00 2004
-    - first revision:
-	    - fixed a few bugs
-		- improved error messages
-		- added tests:
-			- test for exceptions
-			- checked test coverage with Devel::Cover
+0.02   2004-04-01 12:00:00
+       - first revision:
+       - fixed a few bugs
+       - improved error messages
+       - added tests:
+       - test for exceptions
+       - checked test coverage with Devel::Cover
 
-0.01  Thu Mar 11 10:46:33 2004
-	- original version; created by h2xs 1.22 with options
-		-X -n Tree::Simple
+0.01   2004-03-11 10:46:33
+       - original version; created by h2xs 1.22 with options
+         -X -n Tree::Simple
