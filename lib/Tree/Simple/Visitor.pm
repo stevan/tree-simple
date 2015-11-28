@@ -3,7 +3,7 @@ package Tree::Simple::Visitor;
 use strict;
 use warnings;
 
-our $VERSION = '1.25';
+our $VERSION = '1.26';
 
 use Scalar::Util qw(blessed);
 
@@ -299,7 +299,7 @@ stevan little, E<lt>stevan@iinteractive.comE<gt>
 
 =head1 REPOSITORY
 
-L<https://github.com/stevan/tree-simple>.
+L<https://github.com/ronsavage/Tree-Simple>.
 
 =head1 COPYRIGHT AND LICENSE
 

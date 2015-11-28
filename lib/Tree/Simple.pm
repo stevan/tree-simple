@@ -3,7 +3,7 @@ package Tree::Simple;
 use strict;
 use warnings;
 
-our $VERSION = '1.25';
+our $VERSION = '1.26';
 
 use Scalar::Util qw(blessed);
 
@@ -1305,7 +1305,7 @@ Ron Savage E<lt>ron@savage.net.auE<gt> has taken over maintenance as of V 1.19.
 
 =head1 REPOSITORY
 
-L<https://github.com/stevan/tree-simple>.
+L<https://github.com/ronsavage/Tree-Simple>.
 
 =head1 COPYRIGHT AND LICENSE
 

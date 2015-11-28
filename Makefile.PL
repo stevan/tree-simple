@@ -48,8 +48,14 @@ if ($ExtUtils::MakeMaker::VERSION ge '6.46')
 	{
 		resources =>
 		{
-		'bugtracker' => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Tree-Simple',
-		'license' => 'http://www.perlfoundation.org/artistic_license_2_0',
+			bugtracker => 'https://rt.cpan.org/Public/Dist/Display.html?Name=Tree-Simple',
+			license    => 'http://www.perlfoundation.org/artistic_license_2_0',
+			repository =>
+			{
+				type => 'git',
+				url  => 'https://github.com/ronsavage/Tree-Simple.git',
+				web  => 'https://github.com/ronsavage/Tree-Simple',
+			},
 		},
 	};
 }
