@@ -1,6 +1,7 @@
 Revision history for Perl extension Tree::Simple.
 
 1.26  2015-11-28T09:30:00
+	- No code changes.
 	- Accept patches from Manwar via github. See https://github.com/stevan/tree-simple/pull/10.
 	- I (Ron) followed github's advice on handling merge conflicts from the command line, but could
 		not see the patches after the merge. Perhaps this is because Stevan's repo and mine are
