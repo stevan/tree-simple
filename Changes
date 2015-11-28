@@ -8,6 +8,7 @@ Revision history for Perl extension Tree::Simple.
 	- Oops. Can't get Test::Stream to work in 10_Tree_Simple_test.t. Logged issue, but it's
 		probably a problem with the way I tried to use Test::Stream. Revert to Test::More.
 	- Fix reference to github repo in Makefile.PL. Part was missing.
+	- Add xt/author/changes.t to MANIFEST.
 
 1.25  2014-01-13T08:51:00
 	- Fix logic in sub DESTROY for when children are/are not present. Reported by astortz.
