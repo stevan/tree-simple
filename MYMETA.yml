@@ -1,0 +1,34 @@
+---
+abstract: 'A simple tree object'
+author:
+  - 'Stevan Little <stevan@cpan.org>'
+build_requires:
+  ExtUtils::MakeMaker: '0'
+configure_requires:
+  ExtUtils::MakeMaker: '0'
+dynamic_config: 0
+generated_by: 'Module::Build version 0.421, CPAN::Meta::Converter version 2.143240'
+license: perl
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: '1.4'
+name: Tree-Simple
+provides:
+  Tree::Simple:
+    file: lib/Tree/Simple.pm
+    version: '1.25'
+  Tree::Simple::Visitor:
+    file: lib/Tree/Simple/Visitor.pm
+    version: '1.25'
+requires:
+  Scalar::Util: '1.18'
+  Test::Exception: '0.15'
+  Test::More: '1.001014'
+  constant: '0'
+  strict: '0'
+  warnings: '0'
+resources:
+  bugtracker: https://github.com/stevan/tree-simple/issues
+  license: http://dev.perl.org/licenses/
+  repository: https://github.com/stevan/tree-simple
+version: '1.25'
